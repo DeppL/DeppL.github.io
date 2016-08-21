@@ -1,0 +1,80 @@
+
+.loginFun{
+    position:absolute;
+    left:0;
+    top:0
+}
+
+/*.dropdown{
+    position:relative
+}
+
+.dropdown__content{
+    list-style:none;
+    position:absolute;
+    left:50%;
+    top:100%;
+    -webkit-transform:translate(-50%,-24px);
+    transform:translate(-50%,-24px);
+    background:#fff;
+    padding:20px;
+    border-radius:8px;
+    margin-top:15px;
+    box-shadow:0 5px 8px rgba(0,0,0,.25);
+    opacity:0;
+    pointer-events:none;
+    transition:opacity .3s ease,-webkit-transform .2s ease;
+    transition:opacity .3s ease,transform .2s ease;
+    transition:opacity .3s ease,transform .2s ease,-webkit-transform .2s 
+    ease;white-space:nowrap;
+    z-index:1
+}
+
+
+.dropdown__content__link{color:#868686;text-decoration:none;display:inline-block;padding:5px;width:100%;box-sizing:border-box;min-width:125px}
+.dropdown__content__link:hover,.dropdown__content__link:visited:hover{color:#444}
+.dropdown__content__link:visited{color:#868686}
+.dropdown__content__link:active{color:#222}
+.dropdown__content__link--selected{position:relative;padding-right:25px}
+.dropdown__content__link--selected,.dropdown__content__link--selected:hover,.dropdown__content__link--selected:visited{color:#444}
+.dropdown__content__link--selected:after{
+    content:'';
+    background-image:url(https://static.canva.com/static/images/dropdown_tick.png);
+    background-image:url(https://static.canva.com/static/images/dropdown_tick.svg);
+    background-repeat:no-repeat;
+    background-size:cover;
+    background-position:50% 50%;
+    width:20px;
+    height:16px;
+    position:absolute;
+    right:0
+}
+
+
+.dropdown__content--openUp{
+    top:9px;
+    -webkit-transform:translate(-50%,-100%);
+    transform:translate(-50%,-100%);
+    margin-top:0;
+    transition:opacity .3s ease,top .2s ease
+}
+
+.dropdown__content--expanded{pointer-events:auto;display:block;opacity:1;-webkit-transform:translate(-50%,0);transform:translate(-50%,0)}
+.dropdown__content--openUp.dropdown__content--expanded{top:-15px;opacity:1;-webkit-transform:translate(-50%,-100%);transform:translate(-50%,-100%)}
+.dropdown__content:before{content:'';width:6px;height:6px;position:absolute;top:-12px;left:50%;margin-left:-6px;box-sizing:border-box;border:6px solid transparent;border-bottom-color:#fff;border-bottom-color:rgba(255,255,255,.95)}
+.dropdown__content--openUp:before{top:auto;bottom:-12px;border:6px solid transparent;border-top-color:#fff;border-top-color:rgba(255,255,255,.95)}
+@media screen and (-ms-high-contrast:active),(-ms-high-contrast:none){.dropdown__content{display:none}.dropdown__content--expanded{display:block}}.socialAuth__auxiliaryForm{display:none}*/
+
+
+
+
+/*
+.socialAuth__error{color:#c00;white-space:normal;text-align:center;margin-bottom:10px;font-weight:700;display:none;max-width:255px}
+.socialAuth__error--show{display:block}
+*/
+
+/*.form{position:absolute;z-index:10;background-color:#fff;padding:35px 40px;text-align:center;border-radius:10px;top:50%;left:50%;-webkit-transform:translate(-50%,-50%);transform:translate(-50%,-50%);font-size:14px;font-weight:400;font-family:Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif;-webkit-font-smoothing:subpixel-antialiased}.form--inline{position:relative;top:auto;left:auto;-webkit-transform:none;transform:none}.form--withLogo{padding:50px 40px 35px}.form--withLogo .form__logo{position:absolute;top:-50px;left:50%;margin-left:-50px;cursor:pointer}.form__title{margin:15px 0;font-size:22px;font-weight:300;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.form__inputContainer{position:relative;height:60px}.form__inputContainer--first .form__input{border-top-left-radius:5px;border-top-right-radius:5px}.form__inputContainer--last .form__input{border-bottom-left-radius:5px;border-bottom-right-radius:5px}.form__label{position:absolute;display:block;font-size:18px;line-height:18px;color:#b0b0b0;top:20px;left:18px;right:18px;text-align:left;pointer-events:none;transition:all .2s ease;z-index:12}.form--notransitions .form__label{transition:none}.form__input:focus~.form__label,.form__input--dirty~.form__label,.form__input--withError~.form__label{font-size:11px;top:8px}.form__input:-webkit-autofill~.form__label{font-size:11px;top:8px}.form__input{font-size:18px;color:#565656;padding:27px 18px 9px;box-sizing:border-box;display:block;width:100%;border:1px solid #e1e1e1;outline:none;margin:0;transition:background-color .2s ease;height:60px;position:absolute;font-family:inherit;-webkit-appearance:none}.form__input:-moz-read-only{color:#8a8a8a}.form__input:read-only{color:#8a8a8a}.form__input:focus{z-index:11;border-color:#00c4cc}.form__inputContainer~.form__inputContainer{margin-top:-1px}.form__inputMessage{display:none;position:absolute;font-size:11px;line-height:11px;top:11px;right:18px}.form__input--withError{background-color:#fceded}.form__input--withError~.form__inputMessage{display:block;color:#e6544f;z-index:12}
+*/
+
+
+/*.form__footnote{margin-top:10px;font-size:12px;color:#9fa3a9}.form__footnote a{color:inherit}.form__submitButton{margin-top:10px}.form__below{color:#fff;text-shadow:0 1px 2px #444;position:absolute;bottom:0;-webkit-transform:translateY(100%);transform:translateY(100%);left:0;right:0;font-size:12px;font-weight:lighter;padding:0 40px}.form__footButton,.form__footButton:visited{color:white;text-shadow:0 1px 2px #444;font-size:14px;font-weight:400;text-decoration:none;display:block;padding:1em 0}.form__errors{max-width:255px;color:#c00;font-weight:700;margin:10px auto}.form__messages{max-width:255px;color:#3f4652;font-weight:700;margin:10px auto}.form__orDivider{margin:10px 0;font-family:Georgia,Times New Roman,serif;font-style:italic;opacity:.5;font-weight:300;color:#9fa3a9}.form__socialButton:first-of-type{margin-bottom:10px}.form__footLink,.form__footLink:visited{display:inline-block;margin:20px 0 0;text-decoration:none;color:#7f7f7f}.form__footLink:hover{text-decoration:underline}.form .form__submitButton:disabled{background-color:#a3c946;border-color:#a3c946;color:#fff}@media screen and (max-width:435px){.form--withLogo{padding:50px 12px 15px;width:calc(100% - 40px);max-width:calc(100vw - 40px);margin-top:100px}.form--inline{margin-top:0}.form__logo{-webkit-transform:scale(.9);transform:scale(.9)}.form__inputContainer{height:65px}.form__title{margin:10px 0;font-size:18px}.form__input{padding:25px 8px 21px;transition:padding .3s ease;height:65px}.form__label{top:22px;left:8px;right:8px}.form__inputMessage{right:8px;top:48px}}html{height:100%}.authPage{min-height:100%;-webkit-perspective:400px;perspective:400px}.menu{list-style:none}.menu__item{display:inline-block;float:left}.menu__item__button{border:0;background:none;font-size:14px;display:inherit;color:#fff;color:rgba(255,255,255,.8);padding:10px;text-decoration:none;border-radius:5px}.menu__item__button:hover{color:#fff}.menu__item__button:visited{color:#fff}.header{position:absolute;width:100%;z-index:11;box-sizing:border-box;padding:10px;background:linear-gradient(rgba(0,0,0,.2),transparent)}.header:after,.header__menu:after,.header__form:after{content:'';clear:both}.header__menu{float:left}.header__menu__item{display:inline-block;float:left}.header__menu__item a{display:inline-block;color:#fff;padding:10px;text-decoration:none}.header__form{float:right}.header__form__input{border-radius:5px;font-size:14px;line-height:1.2;border:1px solid #919191;margin:1px;background:#fff;background:rgba(255,255,255,.1);padding:10px;color:#fff;outline:none;transition:background-color .2s ease;float:left;font-family:inherit}.header__form__input[type=text]{width:200px}.header__form__input[type=password]{width:140px}.header__form__input:focus{border:2px solid #00c4cc;margin:0}.header__form__input:-webkit-autofill{-webkit-box-shadow:0 0 0 1000px #222 inset;-webkit-text-fill-color:#fff}.header__form__input+.header__form__input{margin-left:10px}.header__form__input+.header__form__input:focus{margin-left:9px}.header__form__input::-webkit-input-placeholder{color:rgba(255,255,255,.5)}.header__form__input:hover::-webkit-input-placeholder,.header__form__input:focus::-webkit-input-placeholder{color:rgba(255,255,255,.7)}.header__form__submitButton,.header__form__submitOptionsButton,.header__form__secondaryButton,.header__logInLink{font-size:14px;line-height:1.2;box-sizing:border-box;color:#fff;float:left;border:2px solid transparent;outline-width:0;text-decoration:none;border-radius:5px;cursor:pointer}.header__logInLink,.header__form__submitButton{background:#99c432;margin:1px 0 1px 10px;padding:9px 18px}.header__form__submitButton{border-top-right-radius:0;border-bottom-right-radius:0}.header__logInLink:hover,.header__form__submitButton:hover{background-color:#a5d92b}.header__logInLink:focus,.header__logInLink:active,.header__form__submitButton:focus,.header__form__submitButton:active{border-color:#83a82b}.header__logInLink:visited{color:#fff}.header__form__submitOptionsButton{background:#89b02c;margin:1px 0;padding:3.5px 6px;border-top-left-radius:0;border-bottom-left-radius:0}.header__form__submitOptionsButton:focus,.header__form__submitOptionsButton:active{border-color:#769a20}.header__form__submitOptionsButton:hover{background-color:#a5d92b}.header__logInLink{padding:9px 38px;float:right;display:none}@-moz-document url-prefix(){.header__form__submitButton{padding-top:8.5px;padding-bottom:8.5px}.header__dropdown__content{min-width:280px}}.header__form__secondaryButton{padding:10px 18px;margin-left:10px;background-color:#222;background-color:rgba(0,0,0,.4);border-radius:5px;outline-width:0;transition:background-color .2s ease}.header__form__secondaryButton:visited{color:#fff!important}.header__form__secondaryButton:hover{background-color:rgba(0,0,0,.6)}.header__form__secondaryButton:focus{border-color:rgba(0,0,0,.2)}.header__dropdown{display:inline-block;float:left}.header__dropdown__button+.header__dropdown__button{margin-top:10px}.footer{position:absolute;bottom:0;background:linear-gradient(transparent,rgba(0,0,0,.2));width:100%;z-index:11;padding:5px 10px;box-sizing:border-box;text-align:center}.footer:after,.footer__menu:after{content:'';display:block;clear:both}.footer__menu{display:inline-block;text-align:left}.footer__menu__headerReplacement{display:none;float:left}@media screen and (max-height:700px){.authPage{position:relative;min-height:700px}}@media screen and (max-width:1175px){.header__menu{display:none}.footer__menu__headerReplacement{display:inline-block}}@media screen and (max-width:1095px){.header__menu,.footer__menu>.menu__item:not(:first-child),#quotes{display:none}}@media screen and (max-width:810px){.header__logInLink{display:block}.header__form,.footer__menu>.menu__item:not(:first-child),.footer__menu__headerReplacement{display:none}}*/

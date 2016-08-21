@@ -1,0 +1,176 @@
+
+/*.strengthChecker__input{
+    position:relative
+}
+
+.strengthChecker__input{
+    transition:border-color .3s ease-in-out
+}*/
+
+
+/*
+.strengthChecker__icons{position:relative}
+
+.strengthChecker__icon{position:absolute;-webkit-transform:translateY(-100%) scale(.5);transform:translateY(-100%) scale(.5);right:0;padding:11px;box-sizing:border-box;opacity:0;transition:opacity .3s ease-in-out,fill .3s ease-in-out,-webkit-transform .3s ease-in-out;transition:opacity .3s ease-in-out,transform .3s ease-in-out,fill .3s ease-in-out;transition:opacity .3s ease-in-out,transform .3s ease-in-out,fill .3s ease-in-out,-webkit-transform .3s ease-in-out}
+
+.strengthChecker__icon--warning{fill:#ff9500}
+
+.strengthChecker__icon--tick{fill:#95c31e}
+
+.strengthChecker__input:not([data-strength='0']){padding-right:40px;margin-right:-40px}
+.strengthChecker[data-strength='1'] 
+.strengthChecker__icon--warning{fill:#ff9500;opacity:1;-webkit-transform:translateY(-100%) scale(1);transform:translateY(-100%) scale(1)}
+.strengthChecker[data-strength='2'] 
+.strengthChecker__icon--warning{fill:#ffd500;opacity:1;-webkit-transform:translateY(-100%) scale(1);transform:translateY(-100%) scale(1)}
+.strengthChecker[data-strength='3'] 
+.strengthChecker__icon--tick{opacity:1;-webkit-transform:translateY(-100%) scale(1);transform:translateY(-100%) scale(1)}
+.strengthChecker__message,.strengthChecker__messageSandbox{font-size:75%;color:#7f7f7f;overflow:hidden;margin-top:0;opacity:1}
+.strengthChecker__message{transition:height .3s ease-in-out,margin-bottom .3s ease-in-out,opacity .3s ease-in-out}
+.strengthChecker__messageSandbox{position:absolute;visibility:hidden}
+.strengthChecker--noFeedback .strengthChecker__message,.strengthChecker[data-strength='0'] .strengthChecker__message{height:0!important;margin-bottom:0!important;opacity:0}
+.strengthChecker--noIcons .strengthChecker__icon{opacity:0!important;-webkit-transform:translateY(-100%) scale(.5)!important;transform:translateY(-100%) scale(.5)!important}*/
+
+.signupFormContainer{
+    display:-ms-flexbox;
+    display:-webkit-flex;
+    display:flex;
+    -ms-flex-align:center;
+    -webkit-align-items:center;
+    align-items:center;
+    -ms-flex-pack:center;
+    -webkit-justify-content:center;
+    justify-content:center;
+    min-height:100vh;
+    box-sizing:border-box;
+    padding:60px 0
+}
+
+.signupFormContainerIe11MinheightHackWrapper{
+    display:-ms-flexbox;
+    display:-webkit-flex;
+    display:flex;
+    -ms-flex-direction:column;
+    -webkit-flex-direction:column;
+    flex-direction:column
+}
+
+.signupFormContainer__inner{
+    position:relative;
+    z-index:10;
+    margin-top:auto;
+    margin-bottom:auto;
+    display:-ms-flexbox;
+    display:-webkit-flex;
+    display:flex;
+    -ms-flex-align:center;
+    -webkit-align-items:center;
+    align-items:center
+}
+
+.signupForm{
+    display:-ms-flexbox;
+    display:-webkit-flex;
+    display:flex;
+    -ms-flex-direction:column;
+    -webkit-flex-direction:column;
+    flex-direction:column;
+    -ms-flex-align:center;
+    -webkit-align-items:center;
+    align-items:center
+}
+
+.signupForm__form{
+    margin-top:50px;
+    min-width:255px;
+    transition:padding .5s ease,-webkit-transform .05s ease;
+    transition:transform .05s ease,padding .5s ease;
+    transition:transform .05s ease,padding .5s ease,-webkit-transform .05s ease
+}
+
+.signupForm__below{
+    color:#fff;
+    text-shadow:0 1px 2px #444;
+    text-align:center;
+    font-size:12px;
+    font-weight:lighter;
+    padding:0 40px;
+    max-width:255px
+}
+
+.signupForm__signupButtons{
+    opacity:0;
+    max-height:0;
+    overflow:hidden
+}
+
+.signupForm--collapsed .signupForm__signupButtons{
+    opacity:1;
+    max-height:178px
+}
+
+.signupForm__emailForm{
+    opacity:1;
+    max-height:316px;
+    overflow:hidden
+}
+
+.signupForm--collapsed .signupForm__emailForm{
+    opacity:0;
+    max-height:0
+}
+
+.signupForm__below .form__footButtons{opacity:1;max-height:50px}
+
+.signupForm--collapsed .form__footButtons{opacity:0;max-height:0}
+
+.fadeTransitionContent--animateCollapse{transition-property:opacity,max-height;transition-duration:.2s,.2s;transition-delay:0.0s,.2s}
+
+.fadeTransitionContent--animateExpand{transition-property:opacity,max-height;transition-duration:.2s,.2s;transition-delay:.4s,.2s}
+
+.signupForm__above{text-align:center;color:#fff;text-shadow:0 1px 2px #444;margin-bottom:1em;width:80vw;font-weight:100;font-size:30px}
+
+.signupForm__invitationFooter{margin:1.5em 0 1em}
+
+.signupFormContainer__quotes{padding-left:40px;width:295px}
+
+.quotes{color:#fff;text-shadow:0 1px 2px #444}
+
+.quotes__quote{font-size:16px;margin-top:30px}
+
+.quotes__quote--important{font-size:44px;margin-top:0;font-weight:600}
+
+.quotes__quote--important small{font-weight:400;opacity:.8}
+
+.quotes__cite{display:block;opacity:.5;font-size:14px}
+
+.quotes__cite:before{content:'– '}
+
+/*
+.signupForm__emailForm__submitButton{margin-top:8px;-webkit-margin-top-collapse:separate}
+
+.signupForm .signupForm__emailForm__submitButton:disabled{background-color:#a3c946;border-color:#a3c946;color:#fff}
+
+.signupForm .strengthChecker{margin-top:8px}
+
+.signupForm .strengthChecker__icons{top:-8px}
+
+.signupForm .strengthChecker__icons,.signupForm .strengthChecker__message{z-index:12}*/
+
+@media screen and (max-width:810px){
+    .quotes{
+        display:none
+    }
+}
+
+@media screen and (max-width:375px){
+    .header__logInLink{
+        padding:7px 5px;
+        font-size:12px;
+        text-transform:uppercase
+    }
+}
+
+body.branch-banner-is-active{
+    margin-top:0!important;
+    padding-top:76px
+}
