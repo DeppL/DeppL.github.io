@@ -137,7 +137,7 @@
                     if(!$("body").css("background-image"))throw Error("body must have a background image");
                     $(k).one("load",l);
                     // $(k).attr("src","https://static.canva.com/static/images/bg_tiles_color.2.jpg")
-                    $(k).attr("src","img/backimage1.jpg")
+                    $(k).attr("src","img/backimage2.jpg")
                 }
             }
         
@@ -162,7 +162,7 @@
                 for(a=1;a<e.length;a++){
                     var g=Math.sqrt(Math.pow(e[a].x-e[a-1].x,2)+Math.pow(e[a].y-e[a-1].y,2));
                     b.strokeStyle="rgba(0,0,0,"+Math.max(1-(d-e[a].time)/1E3,0)+")";
-                    b.lineWidth=25+75*Math.max(1-g/50,0);
+                    b.lineWidth=200+75*Math.max(1-g/50,0);
                     b.beginPath();
                     b.moveTo(e[a-1].x,e[a-1].y);
                     b.lineTo(e[a].x,e[a].y);

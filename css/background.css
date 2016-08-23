@@ -51,7 +51,7 @@ body{
 body.dark{
     background-color:#3f4652;
     /*background-image:url(https://static.canva.com/static/images/bg_tiles.2.jpg);*/
-    background-image:url(../img/backimage1-blur.jpg);
+    background-image:url(../img/backimage2-blur.jpg);
     background-size:cover;
     background-position:0 0
 }
