@@ -1,0 +1,50 @@
+# Basic
+title: DeppL's Blog
+subtitle: 上善若水，人淡如菊
+welcome_message: Blog Designed By <a href="https://github.com/onevcat">@onevcat</a>
+description: 这里是 余亮 的Blog
+creator: <a href="https://github.com/onevcat">@onevcat</a>
+
+url: "https://github.com/deppl"
+
+permalink: /:year/:month/:title/
+
+# Format
+highlighter: plain
+markdown: redcarpet
+redcarpet:
+  extensions: ["no_intra_emphasis", "fenced_code_blocks", "autolink", "strikethrough", "superscript", tables]
+
+# supported colors: blue, green, purple, red, orange or slate. If you need clear, leave it empty.
+cover_color: slate
+
+blog_button:
+    title: 博客
+    description: 访问博客
+
+# nav:
+#     - {title: 项目, description: 我的项目, url: 'http://project.onevcat.com'}
+#     - {title: 关于, description: 了解更多关于我, url: 'http://about.onevcat.com/'}
+#     - {title: 订阅, description: 邮件订阅本站, url: '//store.objccn.io/subscribe'}
+
+# Pagination
+gems: [jekyll-paginate]
+paginate: 10
+paginate_path: "page/:num/"
+
+# Comment
+comment:
+    disqus: onevcat
+    # duoshuo:
+# Social
+social:
+    weibo: u/5826147819
+    github: deppl
+    twitter: deppl_yl
+    # gplus: 107108267983477358170
+    mail: deppl.yl@gmail.com
+
+# Google Analytics
+# ga:
+#     id: UA-25719337-1
+#     host: onevcat.com
