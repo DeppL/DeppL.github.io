@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <title>工作流入门</title>
+  <meta name="description" content="工作流（Work_Flow）引擎，用于各种信息化系统中。由开发人员共同制定的 BPMN 2.0 规范定义，之后布置到工作流引擎中，驱动业务流程的进行。Activiti 支持 BPMN 2.0 规范，并且在其基础上进行扩展。">
+  <meta name="author" content="Wei Wang">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="工作流入门">
+  <meta name="twitter:description" content="工作流（Work_Flow）引擎，用于各种信息化系统中。由开发人员共同制定的 BPMN 2.0 规范定义，之后布置到工作流引擎中，驱动业务流程的进行。Activiti 支持 BPMN 2.0 规范，并且在其基础上进行扩展。">
+  
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="工作流入门">
+  <meta property="og:description" content="工作流（Work_Flow）引擎，用于各种信息化系统中。由开发人员共同制定的 BPMN 2.0 规范定义，之后布置到工作流引擎中，驱动业务流程的进行。Activiti 支持 BPMN 2.0 规范，并且在其基础上进行扩展。">
+  
+  <link rel="icon" type="image/png" href="/assets/images/favicon.png" />
+  <link href="/assets/images/favicon.png" rel="shortcut icon" type="image/png">
+  
+  <link rel="stylesheet" href="/css/main.css">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
+  <link rel="canonical" href="http://localhost:4000/2016/02/WorkFlow-Getting-Started/">
+  <link rel="alternate" type="application/rss+xml" title="DeppL's Blog" href="http://localhost:4000/feed.xml">
+  
+  <meta name="google-site-verification" content="1-1ZlHoRvM0T2FqPbW2S-qLgYXN6rsn52kErlMPd_gw" />
+  
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+    
+    <header class="panel-cover panel-cover--collapsed" style="background-image: url('/assets/images/background-cover.jpg')">
+  <div class="panel-main">
+
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/#blog" title="前往 DeppL's Blog 的主页" class="blog-button"><img src="/assets/images/avatar.jpg" width="80" alt="DeppL's Blog logo" class="panel-cover__logo logo" /></a>
+        <h1 class="panel-cover__title panel-title"><a href="/#blog" title="link to homepage for DeppL's Blog" class="blog-button">DeppL's Blog</a></h1>
+
+        
+        <span class="panel-cover__subtitle panel-subtitle">上善若水，人淡如菊</span>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">这里是 余亮 的 Blog</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+        
+        
+        <p class="panel-cover__description">Blog Designed By <a href="https://github.com/onevcat">@onevcat</a></p>
+        
+        
+        <div class="navigation-wrapper">
+          <div>
+            <nav class="cover-navigation cover-navigation--primary">
+              <ul class="navigation">
+                <li class="navigation__item"><a href="/#blog" title="访问博客" class="blog-button">博客</a></li>
+                
+              </ul>
+            </nav>
+          </div>
+          
+          <div><nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  
+  <!-- Weibo -->
+  <li class="navigation__item">
+    <a href="http://weibo.com/u/5826147819" title="@u/5826147819 的微博" target="_blank">
+      <i class='social fa fa-weibo'></i>
+      <span class="label">Weibo</span>
+    </a>
+  </li>
+  
+
+  
+  <!-- Github -->
+  <li class="navigation__item">
+    <a href="https://github.com/deppl" title="@deppl 的 Github" target="_blank">
+      <i class='social fa fa-github'></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+  
+  
+  
+  <!-- Twitter -->
+  <li class="navigation__item">
+    <a href="http://twitter.com/deppl_yl" title="@deppl_yl" target="_blank">
+      <i class='social fa fa-twitter'></i>
+      <span class="label">Twitter</span>
+    </a>
+  </li>
+  
+
+  
+
+  <!-- RSS 
+  <li class="navigation__item">
+    <a href="/feed.xml" rel="author" title="RSS" target="_blank">
+      <i class='social fa fa-rss'></i>
+      <span class="label">RSS</span>
+    </a>
+  </li>
+  -->
+
+  
+  <!-- Email -->
+  <li class="navigation__item">
+    <a href="mailto:deppl.yl@gmail.com" title="Contact me">
+      <i class='social fa fa-envelope'></i>
+      <span class="label">Email</span>
+    </a>
+  </li>
+  
+
+  </ul>
+</nav>
+</div>
+        </div>
+      </div>
+    </div>
+    
+    
+    <div class="panel-cover--overlay cover-slate"></div>
+    
+  </div>
+</header>
+
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single" itemscope itemtype="http://schema.org/BlogPosting">
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2016-02-15 13:32:24 +0800" itemprop="datePublished" class="post-meta__date date">2016-02-15</time> &#8226; <span class="post-meta__tags tags"></span>
+    </div>
+    <h1 class="post-title">工作流入门</h1>
+  </header>
+
+  <section class="post">
+    <p>工作流（Work_Flow）引擎，用于各种信息化系统中。由开发人员共同制定的 <code>BPMN 2.0</code> 规范定义，之后布置到工作流引擎中，驱动业务流程的进行。Activiti 支持 BPMN 2.0 规范，并且在其基础上进行扩展。</p>
+
+<h2><a name="Activiti-Start"></a>第一部分：初识 Activiti</h2>
+
+<p>1, Activiti 采用 MyBatis 持久层框架，实现数据交换。</p>
+
+<p>2, Activiti 引擎提供七大 Service 接口，通过 ProcessEngine 获取，支持链式 API 编程风格。</p>
+
+<table><thead>
+<tr>
+<th>Service API</th>
+<th style="text-align: left"></th>
+<th>Feature</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>RepositoryService</code></td>
+<td style="text-align: left">流程仓库 Service</td>
+<td>管理流程仓库，如：部署、删除、读取流程资源</td>
+</tr>
+<tr>
+<td><code>IdentifyService</code></td>
+<td style="text-align: left">身份 Service</td>
+<td>管理 和 查询用户与组之间的关系</td>
+</tr>
+<tr>
+<td><code>RuntimeService</code></td>
+<td style="text-align: left">运行时 Service</td>
+<td>处理所有正在运行状态的流程实例、任务等</td>
+</tr>
+<tr>
+<td><code>TaskService</code></td>
+<td style="text-align: left">任务 Service</td>
+<td>用于管理、查询任务，如：签收、办理、指派等</td>
+</tr>
+<tr>
+<td><code>FormService</code></td>
+<td style="text-align: left">表单 Service</td>
+<td>用于读取和流程、任务相关的表单数据</td>
+</tr>
+<tr>
+<td><code>HistoryService</code></td>
+<td style="text-align: left">历史 Service</td>
+<td>可以查询所有历史数据，如：流程实例、任务、活动、变量、附件等</td>
+</tr>
+<tr>
+<td><code>ManagementService</code></td>
+<td style="text-align: left">引擎管理 Service</td>
+<td>和具体业务无关，主要查询引擎配置、数据库、作业等</td>
+</tr>
+</tbody></table>
+
+<p>3, Activiti 流程设计工具 </p>
+
+<ul>
+<li>基于 Eclipse IDE 的 Eclipse Desiger。</li>
+<li>基于 WEB 的 Activiti Modeler。</li>
+</ul>
+
+<p>4, Activiti 原生支持 Spring ，方便管理事务 和 解析表达式（Expression）。</p>
+
+<p>5, Activiti 架构与组件</p>
+
+<ul>
+<li>Activiti Engine ：核心模块，提供针对 BPMN 2.0 规范的解析、执行、创建、管理（ 任务、流程实例 ）、查询历史记录，并根据结果生成报表。</li>
+<li>Activiti Modeler ： WEB 版 流程设计工具。</li>
+<li>Activiti Designer ： 基于 Eclipse 的流程设计工具，生成 XML 格式的流程文件，可以与 WEB版 兼容。</li>
+<li>Activiti Explorer ： 用来管理仓库、用户、组，启动流程、任务办理等。用于开发人员入门。</li>
+<li>Activiti Rest ： 提供 Restful 风格的服务，允许客户端以 JSON 的方式与引擎的 Rest API 交互，可以跨平台，跨语言开发。</li>
+</ul>
+
+<h2><a name="Environment-Part"></a>第二部分：环境搭建</h2>
+
+<p>1, Activiti 下载 ： <a href="http://activiti.org">activiti</a></p>
+
+<p>2, Activiti 目录结构：</p>
+
+<blockquote>
+<ul>
+<li><code>DataBase</code> : 针对 Activiti 引擎表的 create 、 drop 、 upgrade 的脚本。（支持  DB2、 H2、 HSQLDB、 MS_SQL、 MySQL、 oracle 等数据库）</li>
+<li><code>docs</code> ： 文档目录</li>
+</ul>
+
+<table><thead>
+<tr>
+<th style="text-align: left">目录</th>
+<th style="text-align: left">内容</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">docs/javadocs</td>
+<td style="text-align: left">各 Class API 介绍。</td>
+</tr>
+<tr>
+<td style="text-align: left">docs/userguide</td>
+<td style="text-align: left">用户手册，入门文档。</td>
+</tr>
+<tr>
+<td style="text-align: left">docs/xsd</td>
+<td style="text-align: left">与流程定义相关的 scheme 及 Activiti 在 BPMN 2.0 规范上的扩展元素。</td>
+</tr>
+</tbody></table>
+
+<ul>
+<li><code>libs</code> : Activiti 库。使用 Maven 管理依赖。</li>
+<li><code>wars</code> ： explorer 与 rest 模块的 WEB App 包，部署到 tomcat  WEB 服务器中使用。</li>
+</ul>
+</blockquote>
+
+<p>3, </p>
+
+<h2><a name="Process-Design-Part"></a>第三部分：流程设计</h2>
+
+<h2><a name="Process-Deploy-Part"></a>第四部分：流程部署</h2>
+
+<ul>
+<li><a href="#Getting-Start"><strong>初识</strong></a></li>
+<li><a href="#Activiti-Part"><strong>Activiti</strong></a></li>
+<li><a href="#Environment-Part"><strong>环境搭建</strong></a></li>
+<li><a href="#Process-Design-Part"><strong>流程设计</strong></a></li>
+<li><a href="#Process-Deploy-Part"><strong>流程部署</strong></a></li>
+</ul>
+
+<p>You’ll find this post in your <code>_posts</code> directory.</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">def print_hi(name)
+  puts &quot;Hi, #{name}&quot;
+end
+print_hi(&#39;Tom&#39;)
+#=&gt; prints &#39;Hi, Tom&#39; to STDOUT.</code></pre></figure>
+
+<p>Check out the [Jekyll docs][jekyll-docs] for more info on how to get the most out of Jekyll.</p>
+
+  </section>
+</article>
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- OneV's Den -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-3324997515191619"
+     data-ad-slot="9170309685"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+<section class="read-more">
+   
+   
+   
+</section>
+
+<section class="post-comments">
+  
+  
+  
+  
+</section>
+
+
+            <section class="footer">
+    <footer>
+    	<span class="footer__copyright">本站点采用<a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享 署名-非商业性使用-相同方式共享 4.0 国际 许可协议</a></span>
+        <span class="footer__copyright">由 <a href="https://jekyllrb.com">Jekyll</a> 于 2016-10-14 生成，感谢 <a href="https://www.digitalocean.com/?refcode=30ed2d146762">Digital Ocean</a> 为本站提供稳定的 VPS 服务</span>
+        <span class="footer__copyright">本站由 <a href="https://github.com/onevcat">@onevcat</a> 创建，采用 <a href="https://github.com/onevcat/vno-jekyll">Vno - Jekyll</a> 作为主题，您可以在 GitHub 找到<a href="https://github.com/onevcat/OneV-s-Den">本站源码</a> - &copy; 2016</span>
+    </footer>
+</section>
+
+        </div>
+    </div>
+    
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<script type="text/javascript" src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script type="text/javascript" src="/js/main.js"></script>
+
+
+
+    
+  </body>
+
+</html>

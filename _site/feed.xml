@@ -2,12 +2,154 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>DeppL's Blog</title>
-    <description>这里是 余亮 的Blog</description>
+    <description>这里是 余亮 的 Blog</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 14 Oct 2016 12:17:32 +0800</pubDate>
-    <lastBuildDate>Fri, 14 Oct 2016 12:17:32 +0800</lastBuildDate>
+    <pubDate>Fri, 14 Oct 2016 17:52:40 +0800</pubDate>
+    <lastBuildDate>Fri, 14 Oct 2016 17:52:40 +0800</lastBuildDate>
     <generator>Jekyll v3.3.0</generator>
+    
+      <item>
+        <title>工作流入门</title>
+        <description>&lt;p&gt;工作流（Work_Flow）引擎，用于各种信息化系统中。由开发人员共同制定的 &lt;code&gt;BPMN 2.0&lt;/code&gt; 规范定义，之后布置到工作流引擎中，驱动业务流程的进行。Activiti 支持 BPMN 2.0 规范，并且在其基础上进行扩展。&lt;/p&gt;
+
+&lt;h2&gt;&lt;a name=&quot;Activiti-Start&quot;&gt;&lt;/a&gt;第一部分：初识 Activiti&lt;/h2&gt;
+
+&lt;p&gt;1, Activiti 采用 MyBatis 持久层框架，实现数据交换。&lt;/p&gt;
+
+&lt;p&gt;2, Activiti 引擎提供七大 Service 接口，通过 ProcessEngine 获取，支持链式 API 编程风格。&lt;/p&gt;
+
+&lt;table&gt;&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Service API&lt;/th&gt;
+&lt;th style=&quot;text-align: left&quot;&gt;&lt;/th&gt;
+&lt;th&gt;Feature&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;RepositoryService&lt;/code&gt;&lt;/td&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;流程仓库 Service&lt;/td&gt;
+&lt;td&gt;管理流程仓库，如：部署、删除、读取流程资源&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;IdentifyService&lt;/code&gt;&lt;/td&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;身份 Service&lt;/td&gt;
+&lt;td&gt;管理 和 查询用户与组之间的关系&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;RuntimeService&lt;/code&gt;&lt;/td&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;运行时 Service&lt;/td&gt;
+&lt;td&gt;处理所有正在运行状态的流程实例、任务等&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;TaskService&lt;/code&gt;&lt;/td&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;任务 Service&lt;/td&gt;
+&lt;td&gt;用于管理、查询任务，如：签收、办理、指派等&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;FormService&lt;/code&gt;&lt;/td&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;表单 Service&lt;/td&gt;
+&lt;td&gt;用于读取和流程、任务相关的表单数据&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;HistoryService&lt;/code&gt;&lt;/td&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;历史 Service&lt;/td&gt;
+&lt;td&gt;可以查询所有历史数据，如：流程实例、任务、活动、变量、附件等&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;ManagementService&lt;/code&gt;&lt;/td&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;引擎管理 Service&lt;/td&gt;
+&lt;td&gt;和具体业务无关，主要查询引擎配置、数据库、作业等&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;&lt;/table&gt;
+
+&lt;p&gt;3, Activiti 流程设计工具 &lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;基于 Eclipse IDE 的 Eclipse Desiger。&lt;/li&gt;
+&lt;li&gt;基于 WEB 的 Activiti Modeler。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;4, Activiti 原生支持 Spring ，方便管理事务 和 解析表达式（Expression）。&lt;/p&gt;
+
+&lt;p&gt;5, Activiti 架构与组件&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Activiti Engine ：核心模块，提供针对 BPMN 2.0 规范的解析、执行、创建、管理（ 任务、流程实例 ）、查询历史记录，并根据结果生成报表。&lt;/li&gt;
+&lt;li&gt;Activiti Modeler ： WEB 版 流程设计工具。&lt;/li&gt;
+&lt;li&gt;Activiti Designer ： 基于 Eclipse 的流程设计工具，生成 XML 格式的流程文件，可以与 WEB版 兼容。&lt;/li&gt;
+&lt;li&gt;Activiti Explorer ： 用来管理仓库、用户、组，启动流程、任务办理等。用于开发人员入门。&lt;/li&gt;
+&lt;li&gt;Activiti Rest ： 提供 Restful 风格的服务，允许客户端以 JSON 的方式与引擎的 Rest API 交互，可以跨平台，跨语言开发。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;&lt;a name=&quot;Environment-Part&quot;&gt;&lt;/a&gt;第二部分：环境搭建&lt;/h2&gt;
+
+&lt;p&gt;1, Activiti 下载 ： &lt;a href=&quot;http://activiti.org&quot;&gt;activiti&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;2, Activiti 目录结构：&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;DataBase&lt;/code&gt; : 针对 Activiti 引擎表的 create 、 drop 、 upgrade 的脚本。（支持  DB2、 H2、 HSQLDB、 MS_SQL、 MySQL、 oracle 等数据库）&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;docs&lt;/code&gt; ： 文档目录&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;table&gt;&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&quot;text-align: left&quot;&gt;目录&lt;/th&gt;
+&lt;th style=&quot;text-align: left&quot;&gt;内容&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;docs/javadocs&lt;/td&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;各 Class API 介绍。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;docs/userguide&lt;/td&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;用户手册，入门文档。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;docs/xsd&lt;/td&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;与流程定义相关的 scheme 及 Activiti 在 BPMN 2.0 规范上的扩展元素。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;&lt;/table&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;libs&lt;/code&gt; : Activiti 库。使用 Maven 管理依赖。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;wars&lt;/code&gt; ： explorer 与 rest 模块的 WEB App 包，部署到 tomcat  WEB 服务器中使用。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;3, &lt;/p&gt;
+
+&lt;h2&gt;&lt;a name=&quot;Process-Design-Part&quot;&gt;&lt;/a&gt;第三部分：流程设计&lt;/h2&gt;
+
+&lt;h2&gt;&lt;a name=&quot;Process-Deploy-Part&quot;&gt;&lt;/a&gt;第四部分：流程部署&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#Getting-Start&quot;&gt;&lt;strong&gt;初识&lt;/strong&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#Activiti-Part&quot;&gt;&lt;strong&gt;Activiti&lt;/strong&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#Environment-Part&quot;&gt;&lt;strong&gt;环境搭建&lt;/strong&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#Process-Design-Part&quot;&gt;&lt;strong&gt;流程设计&lt;/strong&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#Process-Deploy-Part&quot;&gt;&lt;strong&gt;流程部署&lt;/strong&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;You’ll find this post in your &lt;code&gt;_posts&lt;/code&gt; directory.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;def print_hi(name)
+  puts &amp;quot;Hi, #{name}&amp;quot;
+end
+print_hi(&amp;#39;Tom&amp;#39;)
+#=&amp;gt; prints &amp;#39;Hi, Tom&amp;#39; to STDOUT.&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Check out the [Jekyll docs][jekyll-docs] for more info on how to get the most out of Jekyll.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 15 Feb 2016 13:32:24 +0800</pubDate>
+        <link>http://localhost:4000/2016/02/WorkFlow-Getting-Started/</link>
+        <guid isPermaLink="true">http://localhost:4000/2016/02/WorkFlow-Getting-Started/</guid>
+        
+        
+      </item>
     
   </channel>
 </rss>
