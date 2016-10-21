@@ -1,0 +1,2858 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <title>工作流数据库表</title>
+  <meta name="description" content="一，数据库表结构（Activiti 5.21.0）">
+  <meta name="author" content="Wei Wang">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="工作流数据库表">
+  <meta name="twitter:description" content="一，数据库表结构（Activiti 5.21.0）">
+  
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="工作流数据库表">
+  <meta property="og:description" content="一，数据库表结构（Activiti 5.21.0）">
+  
+  <link rel="icon" type="image/png" href="/assets/images/favicon.png" />
+  <link href="/assets/images/favicon.png" rel="shortcut icon" type="image/png">
+  
+  <link rel="stylesheet" href="/css/main.css">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
+  <link rel="canonical" href="http://localhost:4000/2016/10/Activiti-%E6%95%B0%E6%8D%AE%E5%BA%93%E8%A1%A8/">
+  <link rel="alternate" type="application/rss+xml" title="DeppL's Blog" href="http://localhost:4000/feed.xml">
+  
+  <meta name="google-site-verification" content="1-1ZlHoRvM0T2FqPbW2S-qLgYXN6rsn52kErlMPd_gw" />
+  
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+    
+    <header class="panel-cover panel-cover--collapsed" style="background-image: url('/assets/images/background-cover.jpg')">
+  <div class="panel-main">
+
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/#blog" title="前往 DeppL's Blog 的主页" class="blog-button"><img src="/assets/images/avatar.jpg" width="80" alt="DeppL's Blog logo" class="panel-cover__logo logo" /></a>
+        <h1 class="panel-cover__title panel-title"><a href="/#blog" title="link to homepage for DeppL's Blog" class="blog-button">DeppL's Blog</a></h1>
+
+        
+        <span class="panel-cover__subtitle panel-subtitle">上善若水，人淡如菊</span>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">这里是 余亮 的 Blog</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+        
+        
+        <p class="panel-cover__description">Blog Designed By <a href="https://github.com/onevcat">@onevcat</a></p>
+        
+        
+        <div class="navigation-wrapper">
+          <div>
+            <nav class="cover-navigation cover-navigation--primary">
+              <ul class="navigation">
+                <li class="navigation__item"><a href="/#blog" title="访问博客" class="blog-button">博客</a></li>
+                
+              </ul>
+            </nav>
+          </div>
+          
+          <div><nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  
+  <!-- Weibo -->
+  <li class="navigation__item">
+    <a href="http://weibo.com/u/5826147819" title="@u/5826147819 的微博" target="_blank">
+      <i class='social fa fa-weibo'></i>
+      <span class="label">Weibo</span>
+    </a>
+  </li>
+  
+
+  
+  <!-- Github -->
+  <li class="navigation__item">
+    <a href="https://github.com/deppl" title="@deppl 的 Github" target="_blank">
+      <i class='social fa fa-github'></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+  
+  
+  
+  <!-- Twitter -->
+  <li class="navigation__item">
+    <a href="http://twitter.com/deppl_yl" title="@deppl_yl" target="_blank">
+      <i class='social fa fa-twitter'></i>
+      <span class="label">Twitter</span>
+    </a>
+  </li>
+  
+
+  
+
+  <!-- RSS 
+  <li class="navigation__item">
+    <a href="/feed.xml" rel="author" title="RSS" target="_blank">
+      <i class='social fa fa-rss'></i>
+      <span class="label">RSS</span>
+    </a>
+  </li>
+  -->
+
+  
+  <!-- Email -->
+  <li class="navigation__item">
+    <a href="mailto:deppl.yl@gmail.com" title="Contact me">
+      <i class='social fa fa-envelope'></i>
+      <span class="label">Email</span>
+    </a>
+  </li>
+  
+
+  </ul>
+</nav>
+</div>
+        </div>
+      </div>
+    </div>
+    
+    
+    <div class="panel-cover--overlay cover-slate"></div>
+    
+  </div>
+</header>
+
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single" itemscope itemtype="http://schema.org/BlogPosting">
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2016-10-20 13:32:24 +0800" itemprop="datePublished" class="post-meta__date date">2016-10-20</time> &#8226; <span class="post-meta__tags tags"></span>
+    </div>
+    <h1 class="post-title">工作流数据库表</h1>
+  </header>
+
+  <section class="post">
+    <h1>一，数据库表结构（Activiti 5.21.0）</h1>
+
+<h2>1.1 表单分类</h2>
+
+<ul>
+<li>ACT_RE_*：RepositoryService 接口。包含流程定义（BPMN XML），流程资源（png）等文件</li>
+<li>ACT_RU_*：RuntimeService 接口。运行时的数据，包含流程变量，用户任务，等运行时数据。流程实例结束时，删除记录。</li>
+<li>ACT_ID_*：IdentityService 接口。包含用户，组 等。 </li>
+<li>ACT_HI_*：HistoryService 接口。包含用户，组 等。</li>
+<li>ACT_GE_*：全局通用数据。</li>
+</ul>
+
+<hr>
+
+<h2>1.2 表单详情</h2>
+
+<table><thead>
+<tr>
+<th style="text-align: left">表名</th>
+<th>说明</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left"><a href="#ACT_GE_PROPERTY"><code>ACT_GE_BYTEARRAY</code></a></td>
+<td>存放二进制数据</td>
+</tr>
+<tr>
+<td style="text-align: left"><a href="#ACT_GE_PROPERTY">ACT_GE_PROPERTY</a></td>
+<td>属性数据表。存储整个流程引擎级别的数据。</td>
+</tr>
+<tr>
+<td style="text-align: left"></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left"></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left"></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left"></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left"><a href="#ACT_HI_ACTINST">ACT_HI_ACTINST</a></td>
+<td>历史节点表</td>
+</tr>
+<tr>
+<td style="text-align: left"><a href="#ACT_HI_ATTACHMENT">ACT_HI_ATTACHMENT</a></td>
+<td>历史附件表</td>
+</tr>
+<tr>
+<td style="text-align: left"><a href="#ACT_HI_COMMENT">ACT_HI_COMMENT</a></td>
+<td>历史意见表</td>
+</tr>
+<tr>
+<td style="text-align: left"><a href="#ACT_HI_DETAIL">ACT_HI_DETAIL</a></td>
+<td>历史详情表，提供历史变量的查询</td>
+</tr>
+<tr>
+<td style="text-align: left"><a href="#ACT_HI_IDENTITYLINK">ACT_HI_IDENTITYLINK</a></td>
+<td>历史流程人员表</td>
+</tr>
+<tr>
+<td style="text-align: left"><a href="#ACT_HI_PROCINST"><code>ACT_HI_PROCINST</code></a></td>
+<td>历史流程实例表</td>
+</tr>
+<tr>
+<td style="text-align: left"><a href="#ACT_HI_TASKINST"><code>ACT_HI_TASKINST</code></a></td>
+<td>历史任务实例表</td>
+</tr>
+<tr>
+<td style="text-align: left"><a href="#ACT_HI_VARINST"><code>ACT_HI_VARINST</code></a></td>
+<td>历史变量实例表</td>
+</tr>
+<tr>
+<td style="text-align: left"></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left"></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left"></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left"></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left"><a href="#ACT_ID_GROUP">ACT_ID_GROUP</a></td>
+<td>用户组信息表</td>
+</tr>
+<tr>
+<td style="text-align: left"><a href="#ACT_ID_INFO">ACT_ID_INFO</a></td>
+<td>用户扩展信息表</td>
+</tr>
+<tr>
+<td style="text-align: left"><a href="#ACT_ID_MEMBERSHIP">ACT_ID_MEMBERSHIP</a></td>
+<td>用户与用户组对应信息表</td>
+</tr>
+<tr>
+<td style="text-align: left"><a href="#ACT_ID_USER">ACT_ID_USER</a></td>
+<td>用户信息表</td>
+</tr>
+<tr>
+<td style="text-align: left"></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left"></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left"></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left"></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left"><a href="#ACT_RE_DEPLOYMENT"><code>ACT_RE_DEPLOYMENT</code></a></td>
+<td>部署信息</td>
+</tr>
+<tr>
+<td style="text-align: left"><a href="#ACT_RE_MODEL">ACT_RE_MODEL</a></td>
+<td>流程设计模型部署表</td>
+</tr>
+<tr>
+<td style="text-align: left"><a href="#ACT_RE_PROCDEF"><code>ACT_RE_PROCDEF</code></a></td>
+<td>流程定义数据表</td>
+</tr>
+<tr>
+<td style="text-align: left"></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left"></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left"></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left"></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left"><a href="#ACT_RU_EVENT_SUBSCR">ACT_RU_EVENT_SUBSCR</a></td>
+<td>throwEvent、catchEvent时间监听表</td>
+</tr>
+<tr>
+<td style="text-align: left"><a href="#ACT_RU_EXECUTION"><code>ACT_RU_EXECUTION</code></a></td>
+<td>运行时流程执行实例表</td>
+</tr>
+<tr>
+<td style="text-align: left"><a href="#ACT_RU_IDENTITYLINK">ACT_RU_IDENTITYLINK</a></td>
+<td>运行时流程人员表，主要储存任务节点与参与者相关信息</td>
+</tr>
+<tr>
+<td style="text-align: left"><a href="#ACT_RU_JOB">ACT_RU_JOB</a></td>
+<td>运行时定时任务数据表</td>
+</tr>
+<tr>
+<td style="text-align: left"><a href="#ACT_RU_TASK"><code>ACT_RU_TASK</code></a></td>
+<td>运行时任务节点表</td>
+</tr>
+<tr>
+<td style="text-align: left"><a href="#ACT_RU_VARIABLE"><code>ACT_RU_VARIABLE</code></a></td>
+<td>运行时流程变量数据表</td>
+</tr>
+</tbody></table>
+
+<h1>二，表及索引信息</h1>
+
+<h2>2.1 <a name="ACT_GE_BYTEARRAY"></a> ACT_GE_BYTEARRAY</h2>
+
+<h3>2.1.1描述</h3>
+
+<p>保存流程定义图片，XML，ZIP等二进制数据。</p>
+
+<h3>2.1.2表结构</h3>
+
+<table><thead>
+<tr>
+<th style="text-align: left">字段名称</th>
+<th>字段描述</th>
+<th>数据类型</th>
+<th>主键</th>
+<th>为空</th>
+<th>说明</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">ID_</td>
+<td>id</td>
+<td>varchar(64)</td>
+<td>√</td>
+<td></td>
+<td>主键ID</td>
+</tr>
+<tr>
+<td style="text-align: left">REV_</td>
+<td>版本</td>
+<td>integer</td>
+<td></td>
+<td>√</td>
+<td>版本</td>
+</tr>
+<tr>
+<td style="text-align: left">NAME_</td>
+<td>名称</td>
+<td>varchar(255)</td>
+<td></td>
+<td>√</td>
+<td>文件名 如：*.bpmn</td>
+</tr>
+<tr>
+<td style="text-align: left">DEPLOYMENT_ID_</td>
+<td>部署ID</td>
+<td>varchar(64)</td>
+<td></td>
+<td>√</td>
+<td>部署表ID</td>
+</tr>
+<tr>
+<td style="text-align: left">BYTES_</td>
+<td>字节</td>
+<td>LONGBLOB</td>
+<td></td>
+<td>√</td>
+<td>部署文件</td>
+</tr>
+<tr>
+<td style="text-align: left">GENERATED_</td>
+<td>是否为引擎生成</td>
+<td>TINYINT</td>
+<td></td>
+<td>√</td>
+<td>0位用户生成，1为Activiti生成</td>
+</tr>
+</tbody></table>
+
+<h2>2.2 <a name="ACT_GE_PROPERTY"></a>ACT_GE_PROPERTY</h2>
+
+<h3>2.2.1描述</h3>
+
+<p>属性数据表。存储整个流程引擎级别的数据。</p>
+
+<h3>2.2.2表结构</h3>
+
+<table><thead>
+<tr>
+<th style="text-align: left">字段名称</th>
+<th>字段描述</th>
+<th>数据类型</th>
+<th>主键</th>
+<th>为空</th>
+<th>说明</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">NAME_</td>
+<td>名称</td>
+<td>varchar(64)</td>
+<td>√</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">VALUE_</td>
+<td>值</td>
+<td>varchar(300)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">REV_</td>
+<td></td>
+<td>integer</td>
+<td></td>
+<td>√</td>
+<td>version</td>
+</tr>
+</tbody></table>
+
+<h2>2.3 <a name="ACT_HI_ACTINST"></a> ACT_HI_ACTINST</h2>
+
+<h3>2.3.1描述</h3>
+
+<h3>2.3.2表结构</h3>
+
+<table><thead>
+<tr>
+<th style="text-align: left">字段名称</th>
+<th>字段描述</th>
+<th>数据类型</th>
+<th>主键</th>
+<th>为空</th>
+<th>说明</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">ID_</td>
+<td>id</td>
+<td>varchar(64)</td>
+<td>√</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">PROC_DEF_ID_</td>
+<td>流程定义id</td>
+<td>varchar(64)</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">PROC_INST_ID_</td>
+<td>流程实例id</td>
+<td>varchar(64)</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">EXECUTION_ID_</td>
+<td>执行实例id</td>
+<td>varchar(64)</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">ACT_ID_</td>
+<td>节点id</td>
+<td>varchar(255)</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">TASK_ID_</td>
+<td>任务实例id</td>
+<td>varchar(64)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">CALL_PROC_INST_ID_</td>
+<td>调用外部的流程实例id</td>
+<td>varchar(64)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">ACT_NAME_</td>
+<td>节点名称</td>
+<td>varchar(255)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">ACT_TYPE_</td>
+<td>节点类型</td>
+<td>varchar(255)</td>
+<td></td>
+<td></td>
+<td>如startEvent，UserTask</td>
+</tr>
+<tr>
+<td style="text-align: left">ASSIGNEE_</td>
+<td>执行人</td>
+<td>varchar(255)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">START_TIME_</td>
+<td>开始时间</td>
+<td>datetime(3)</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">END_TIME_</td>
+<td>结束时间</td>
+<td>datetime(3)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">DURATION_</td>
+<td>耗时</td>
+<td>bigint</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">TENANT_ID_</td>
+<td></td>
+<td>varchar(64)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+</tbody></table>
+
+<h2>2.4 <a name="ACT_HI_ATTACHMENT"></a> ACT_HI_ATTACHMENT</h2>
+
+<h3>2.4.1描述</h3>
+
+<p>历史附件表</p>
+
+<h3>2.4.2表结构</h3>
+
+<table><thead>
+<tr>
+<th style="text-align: left">字段名称</th>
+<th>字段描述</th>
+<th>数据类型</th>
+<th>主键</th>
+<th>为空</th>
+<th>说明</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">ID_</td>
+<td>id</td>
+<td>varchar(64)</td>
+<td>√</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">REV_</td>
+<td></td>
+<td>integer</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">USER_ID_</td>
+<td>用户id</td>
+<td>varchar(255)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">NAME_</td>
+<td>名称</td>
+<td>varchar(255)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">DESCRIPTION_</td>
+<td>描述</td>
+<td>varchar(4000)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">TYPE_</td>
+<td>类型</td>
+<td>varchar(255)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">TASK_ID_</td>
+<td>任务实例id</td>
+<td>varchar(64)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">PROC_INST_ID_</td>
+<td>流程实例id</td>
+<td>varchar(64)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">URL_</td>
+<td>url</td>
+<td>varchar(4000)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">CONTENT_ID_</td>
+<td>字节表id</td>
+<td>varchar(64)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">TIME_</td>
+<td>时间戳</td>
+<td>datetime(3)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+</tbody></table>
+
+<h2>2.5 <a name="ACT_HI_COMMENT"></a> ACT_HI_COMMENT</h2>
+
+<h3>2.5.1描述</h3>
+
+<p>历史意见表</p>
+
+<h3>2.5.2表结构</h3>
+
+<table><thead>
+<tr>
+<th style="text-align: left">字段名称</th>
+<th>字段描述</th>
+<th>数据类型</th>
+<th>主键</th>
+<th>为空</th>
+<th>说明</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">ID_</td>
+<td>id</td>
+<td>varchar(64)</td>
+<td>√</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">TYPE_</td>
+<td>类型</td>
+<td>varchar(255)</td>
+<td></td>
+<td>√</td>
+<td>event，comment</td>
+</tr>
+<tr>
+<td style="text-align: left">TIME_</td>
+<td>时间</td>
+<td>datetime(3)</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">USER_ID_</td>
+<td>用户id</td>
+<td>varchar(255)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">TASK_ID_</td>
+<td>节点任务id</td>
+<td>varchar(64)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">PROC_INST_ID_</td>
+<td>流程实例id</td>
+<td>varchar(64)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">ACTION_</td>
+<td>行为类型</td>
+<td>varchar(255)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">MESSAGE_</td>
+<td>基本内容</td>
+<td>varchar(4000)</td>
+<td></td>
+<td>√</td>
+<td>存放流程产生的信息，比如审批意见</td>
+</tr>
+<tr>
+<td style="text-align: left">FULL_MSG_</td>
+<td>全部内容</td>
+<td>LONGBLOB</td>
+<td></td>
+<td>√</td>
+<td>附件地址</td>
+</tr>
+</tbody></table>
+
+<h2>2.6 <a name="ACT_HI_DETAIL"></a> ACT_HI_DETAIL</h2>
+
+<h3>2.6.1描述</h3>
+
+<p>历史详情表：流程中产生的变量详细，包括控制流程流转的变量，业务表单中填写的流程需要用到的变量等。</p>
+
+<h3>2.6.2表结构</h3>
+
+<table><thead>
+<tr>
+<th style="text-align: left">字段名称</th>
+<th>字段描述</th>
+<th>数据类型</th>
+<th>主键</th>
+<th>为空</th>
+<th>说明</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">ID_</td>
+<td>id</td>
+<td>varchar(64)</td>
+<td>√</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">TYPE_</td>
+<td>类型</td>
+<td>varchar(255)</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">PROC_INST_ID_</td>
+<td>流程实例id</td>
+<td>varchar(64)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">EXECUTION_ID_</td>
+<td>执行实例id</td>
+<td>varchar(64)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">TASK_ID_</td>
+<td>任务实例id</td>
+<td>varchar(64)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">ACT_INST_ID_</td>
+<td>节点实例id</td>
+<td>varchar(64)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">NAME_</td>
+<td>名称</td>
+<td>varchar(255)</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">VAR_TYPE_</td>
+<td>参数类型</td>
+<td>varchar(255)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">REV_</td>
+<td></td>
+<td>integer</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">TIME_</td>
+<td>时间戳</td>
+<td>datetime(3)</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">BYTEARRAY_ID_</td>
+<td>字节表id</td>
+<td>varchar(64)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">DOUBLE_</td>
+<td></td>
+<td>double</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">LONG_</td>
+<td></td>
+<td>bigint</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">TEXT_</td>
+<td></td>
+<td>varchar(4000)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">TEXT2_</td>
+<td></td>
+<td>varchar(4000)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+</tbody></table>
+
+<h2>2.7 <a name="ACT_HI_IDENTITYLINK"></a> ACT_HI_IDENTITYLINK</h2>
+
+<h3>2.7.1描述</h3>
+
+<p>任务参与者数据表，主要储存历史节点参与者的信息。</p>
+
+<h3>2.7.2表结构</h3>
+
+<table><thead>
+<tr>
+<th style="text-align: left">字段名称</th>
+<th>字段描述</th>
+<th>数据类型</th>
+<th>主键</th>
+<th>为空</th>
+<th>说明</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">ID_</td>
+<td>id</td>
+<td>varchar(64)</td>
+<td>√</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">GROUP_ID_</td>
+<td>组id</td>
+<td>varchar(255)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">TYPE_</td>
+<td>类型</td>
+<td>varchar(255)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">USER_ID_</td>
+<td>用户id</td>
+<td>varchar(255)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">TASK_ID_</td>
+<td>节点实例id</td>
+<td>varchar(64)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">PROC_INST_ID_</td>
+<td>流程实例id</td>
+<td>varchar(64)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+</tbody></table>
+
+<h2>2.8 <a name="ACT_HI_PROCINST"></a> ACT_HI_PROCINST</h2>
+
+<h3>2.8.1描述</h3>
+
+<p>历史流程实例表</p>
+
+<h3>2.8.2表结构</h3>
+
+<table><thead>
+<tr>
+<th style="text-align: left">字段名称</th>
+<th>字段描述</th>
+<th>数据类型</th>
+<th>主键</th>
+<th>为空</th>
+<th>说明</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">ID_</td>
+<td>id</td>
+<td>varchar(64)</td>
+<td>√</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">PROC_INST_ID_</td>
+<td>流程实例id</td>
+<td>varchar(64)</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">BUSINESS_KEY_</td>
+<td>业务key</td>
+<td>varchar(255)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">PROC_DEF_ID_</td>
+<td>流程定义id</td>
+<td>varchar(64)</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">START_TIME_</td>
+<td>开始时间</td>
+<td>datetime(3)</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">END_TIME_</td>
+<td>结束时间</td>
+<td>datetime(3)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">DURATION_</td>
+<td>耗时</td>
+<td>bigint</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">START_USER_ID_</td>
+<td>起草人</td>
+<td>varchar(255)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">START_ACT_ID_</td>
+<td>开始节点id</td>
+<td>varchar(255)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">END_ACT_ID_</td>
+<td>结束节点id</td>
+<td>varchar(255)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">SUPER_PROCESS_INSTANCE_ID_</td>
+<td>父流程实例id</td>
+<td>varchar(64)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">DELETE_REASON_</td>
+<td>删除原因</td>
+<td>varchar(4000)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">TENANT_ID_</td>
+<td></td>
+<td>varchar(255)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">NAME_</td>
+<td></td>
+<td>varchar(255)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+</tbody></table>
+
+<h2>2.9 <a name="ACT_HI_TASKINST"></a> ACT_HI_TASKINST</h2>
+
+<h3>2.9.1描述</h3>
+
+<p>历史任务实例表</p>
+
+<h3>2.9.2表结构</h3>
+
+<table><thead>
+<tr>
+<th style="text-align: left">字段名称</th>
+<th>字段描述</th>
+<th>数据类型</th>
+<th>主键</th>
+<th>为空</th>
+<th>说明</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">ID_</td>
+<td>id</td>
+<td>varchar(64)</td>
+<td>√</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">PROC_DEF_ID_</td>
+<td>流程定义id</td>
+<td>varchar(64)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">TASK_DEF_KEY_</td>
+<td>节点定义id</td>
+<td>varchar(255)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">PROC_INST_ID_</td>
+<td>流程实例id</td>
+<td>varchar(64)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">EXECUTION_ID_</td>
+<td>执行实例id</td>
+<td>varchar(64)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">NAME_</td>
+<td>名称</td>
+<td>varchar(255)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">PARENT_TASK_ID_</td>
+<td>父节点实例id</td>
+<td>varchar(64)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">DESCRIPTION_</td>
+<td>描述</td>
+<td>varchar(4000)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">OWNER_</td>
+<td>任务拥有者</td>
+<td>varchar(255)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">ASSIGNEE_</td>
+<td>执行者</td>
+<td>varchar(255)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">START_TIME_</td>
+<td>开始时间</td>
+<td>datetime(3)</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">CLAIM_TIME_</td>
+<td>提醒时间</td>
+<td>datetime(3)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">END_TIME_</td>
+<td>结束时间</td>
+<td>datetime(3)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">DURATION_</td>
+<td>耗时</td>
+<td>bigint</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">DELETE_REASON_</td>
+<td>删除原因</td>
+<td>varchar(4000)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">PRIORITY_</td>
+<td>优先级</td>
+<td>integer</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">DUE_DATE_</td>
+<td>过期时间</td>
+<td>datetime(3)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">FORM_KEY_</td>
+<td>节点定义的表单key</td>
+<td>varchar(255)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">CATEGORY_</td>
+<td></td>
+<td>varchar(255)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">TENANT_ID_</td>
+<td></td>
+<td>varchar(255)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+</tbody></table>
+
+<h2>2.10 <a name="ACT_HI_VARINST"></a> ACT_HI_VARINST</h2>
+
+<h3>2.10.1描述</h3>
+
+<p>历史变量表。</p>
+
+<h3>2.10.2表结构</h3>
+
+<table><thead>
+<tr>
+<th style="text-align: left">字段名称</th>
+<th>字段描述</th>
+<th>数据类型</th>
+<th>主键</th>
+<th>为空</th>
+<th>说明</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">ID_</td>
+<td>id</td>
+<td>varchar(64)</td>
+<td>√</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">PROC_INST_ID_</td>
+<td>流程实例id</td>
+<td>varchar(64)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">EXECUTION_ID_</td>
+<td>执行实例id</td>
+<td>varchar(64)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">TASK_ID_</td>
+<td>任务实例id</td>
+<td>varchar(64)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">NAME_</td>
+<td></td>
+<td>varchar(255)</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">VAR_TYPE_</td>
+<td>参数类型</td>
+<td>varchar(100)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">REV_</td>
+<td></td>
+<td>integer</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">BYTEARRAY_ID_</td>
+<td>字节表id</td>
+<td>varchar(64)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">DOUBLE_</td>
+<td></td>
+<td>double</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">LONG_</td>
+<td></td>
+<td>bigint</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">TEXT_</td>
+<td></td>
+<td>varchar(4000)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">TEXT2_</td>
+<td></td>
+<td>varchar(4000)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">CREATE_TIME_</td>
+<td>创建时间</td>
+<td>datetime(3)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">LAST_UPDATED_TIME_</td>
+<td>最近更新时间</td>
+<td>datetime(3)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+</tbody></table>
+
+<h2>2.11 <a name="ACT_ID_GROUP"></a> ACT_ID_GROUP</h2>
+
+<h3>2.11.1描述</h3>
+
+<p>用来存储用户组信息。</p>
+
+<h3>2.11.2表结构</h3>
+
+<table><thead>
+<tr>
+<th style="text-align: left">字段名称</th>
+<th>字段描述</th>
+<th>数据类型</th>
+<th>主键</th>
+<th>为空</th>
+<th>说明</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">ID_</td>
+<td></td>
+<td>varchar(64)</td>
+<td>√</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">REV_</td>
+<td></td>
+<td>integer</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">NAME_</td>
+<td></td>
+<td>varchar(255)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">TYPE_</td>
+<td></td>
+<td>varchar(255)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+</tbody></table>
+
+<h2>2.12 <a name="ACT_ID_INFO"></a> ACT_ID_INFO</h2>
+
+<h3>2.12.1描述</h3>
+
+<p>用户扩展信息表。</p>
+
+<h3>2.12.2表结构</h3>
+
+<table><thead>
+<tr>
+<th style="text-align: left">字段名称</th>
+<th>字段描述</th>
+<th>数据类型</th>
+<th>主键</th>
+<th>为空</th>
+<th>说明</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">ID_</td>
+<td></td>
+<td>varchar(64)</td>
+<td>√</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">REV_</td>
+<td></td>
+<td>integer</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">USER_ID_</td>
+<td></td>
+<td>varchar(64)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">TYPE_</td>
+<td></td>
+<td>varchar(64)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">KEY_</td>
+<td></td>
+<td>varchar(255)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">VALUE_</td>
+<td></td>
+<td>varchar(255)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">PASSWORD_</td>
+<td></td>
+<td>LONGBLOB</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">PARENT_ID_</td>
+<td></td>
+<td>varchar(255)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+</tbody></table>
+
+<h2>2.13 <a name="ACT_ID_MEMBERSHIP"></a> ACT_ID_MEMBERSHIP</h2>
+
+<h3>2.13.1描述</h3>
+
+<p>用来保存用户的分组信息。</p>
+
+<h3>2.13.2表结构</h3>
+
+<table><thead>
+<tr>
+<th style="text-align: left">字段名称</th>
+<th>字段描述</th>
+<th>数据类型</th>
+<th>主键</th>
+<th>为空</th>
+<th>说明</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">USER_ID_</td>
+<td></td>
+<td>varchar(64)</td>
+<td>√</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">GROUP_ID_</td>
+<td></td>
+<td>varchar(64)</td>
+<td>√</td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+
+<h2>2.14 <a name="ACT_ID_USER"></a> ACT_ID_USER</h2>
+
+<h3>2.14.1描述</h3>
+
+<p>工作流用户信息。</p>
+
+<h3>2.14.2表结构</h3>
+
+<table><thead>
+<tr>
+<th style="text-align: left">字段名称</th>
+<th>字段描述</th>
+<th>数据类型</th>
+<th>主键</th>
+<th>为空</th>
+<th>说明</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">ID_</td>
+<td></td>
+<td>varchar(64)</td>
+<td>√</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">REV_</td>
+<td></td>
+<td>integer</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">FIRST_</td>
+<td></td>
+<td>varchar(255)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">LAST_</td>
+<td></td>
+<td>varchar(255)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">EMAIL_</td>
+<td></td>
+<td>varchar(255)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">PWD_</td>
+<td></td>
+<td>varchar(255)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">PICTURE_ID_</td>
+<td>图片id</td>
+<td>varchar(64)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+</tbody></table>
+
+<h2>2.15 <a name="ACT_RE_DEPLOYMENT"></a> ACT_RE_DEPLOYMENT</h2>
+
+<h3>2.15.1描述</h3>
+
+<p>部署流程定义时需要被持久化保存下来的信息。</p>
+
+<h3>2.15.2表结构</h3>
+
+<table><thead>
+<tr>
+<th style="text-align: left">字段名称</th>
+<th>字段描述</th>
+<th>数据类型</th>
+<th>主键</th>
+<th>为空</th>
+<th>说明</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">ID_</td>
+<td></td>
+<td>varchar(64)</td>
+<td>√</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">NAME_</td>
+<td></td>
+<td>varchar(255)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">CATEGORY_</td>
+<td></td>
+<td>varchar(255)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">TENANT_ID_</td>
+<td></td>
+<td>varchar(255)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">DEPLOY_TIME_</td>
+<td></td>
+<td>timestamp(3)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+</tbody></table>
+
+<h2>2.16 <a name="ACT_RE_MODEL"></a> ACT_RE_MODEL</h2>
+
+<h3>2.16.1描述</h3>
+
+<p>流程设计器设计流程后，保存数据到该表。</p>
+
+<h3>2.16.2表结构</h3>
+
+<table><thead>
+<tr>
+<th style="text-align: left">字段名称</th>
+<th>字段描述</th>
+<th>数据类型</th>
+<th>主键</th>
+<th>为空</th>
+<th>说明</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">ID_</td>
+<td></td>
+<td>varchar(64)</td>
+<td>√</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">REV_</td>
+<td></td>
+<td>integer</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">NAME_</td>
+<td></td>
+<td>varchar(255)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">KEY_</td>
+<td></td>
+<td>varchar(255)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">CATEGORY_</td>
+<td></td>
+<td>varchar(255)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">CREATE_TIME_</td>
+<td></td>
+<td>timestamp(3)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">LAST_UPDATE_TIME_</td>
+<td></td>
+<td>timestamp(3)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">VERSION_</td>
+<td></td>
+<td>integer</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">META_INFO_</td>
+<td></td>
+<td>varchar(4000)</td>
+<td></td>
+<td>√</td>
+<td>以json格式保存流程定义的信息</td>
+</tr>
+<tr>
+<td style="text-align: left">DEPLOYMENT_ID_</td>
+<td>部署id</td>
+<td>varchar(64)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">EDITOR_SOURCE_VALUE_ID_</td>
+<td></td>
+<td>varchar(64)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">EDITOR_SOURCE_EXTRA_VALUE_ID_</td>
+<td></td>
+<td>varchar(64)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">TENANT_ID_</td>
+<td></td>
+<td>varchar(255)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+</tbody></table>
+
+<h2>2.17 <a name="ACT_RE_PROCDEF"></a> ACT_RE_PROCDEF</h2>
+
+<h3>2.17.1描述</h3>
+
+<p>业务流程定义数据表。此表和ACT_RE_DEPLOYMENT是多对一的关系，即，一个部署的bar包里可能包含多个流程定义文件，每个流程定义文件都会有一条记录在ACT_RE_PROCDEF表内，每个流程定义的数据，都会对于ACT_GE_BYTEARRAY表内的一个资源文件和PNG图片文件。和ACT_GE_BYTEARRAY的关联是通过程序用ACT_GE_BYTEARRAY.NAME与ACT_RE_PROCDEF.NAME_完成的，在数据库表结构中没有体现。</p>
+
+<h3>2.17.2表结构</h3>
+
+<table><thead>
+<tr>
+<th style="text-align: left">字段名称</th>
+<th>字段描述</th>
+<th>数据类型</th>
+<th>主键</th>
+<th>为空</th>
+<th>说明</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">ID_</td>
+<td></td>
+<td>varchar(64)</td>
+<td>√</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">REV_</td>
+<td></td>
+<td>integer</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">CATEGORY_</td>
+<td></td>
+<td>varchar(255)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">NAME_</td>
+<td></td>
+<td>varchar(255)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">KEY_</td>
+<td></td>
+<td>varchar(255)</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">VERSION_</td>
+<td></td>
+<td>integer</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">DEPLOYMENT_ID_</td>
+<td></td>
+<td>varchar(64)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">RESOURCE_NAME_</td>
+<td>bpmn文件名称</td>
+<td>varchar(4000)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">DGRM_RESOURCE_NAME_</td>
+<td>png图片名称</td>
+<td>varchar(4000)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">DESCRIPTION_</td>
+<td></td>
+<td>varchar(4000)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">HAS_START_FORM_KEY_</td>
+<td>是否存在开始节点表单key</td>
+<td>TINYINT</td>
+<td></td>
+<td>√</td>
+<td>0 否。1 是</td>
+</tr>
+<tr>
+<td style="text-align: left">HAS_GRAPHICAL_NOTATION_</td>
+<td></td>
+<td>TINYINT</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">SUSPENSION_STATE_</td>
+<td>是否挂起</td>
+<td>integer</td>
+<td></td>
+<td>√</td>
+<td>1激活。 2挂起</td>
+</tr>
+<tr>
+<td style="text-align: left">TENANT_ID_</td>
+<td></td>
+<td>varchar(255)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+</tbody></table>
+
+<h2>2.18 <a name="ACT_RU_EVENT_SUBSCR"></a> ACT_RU_EVENT_SUBSCR</h2>
+
+<h3>2.18.1描述</h3>
+
+<p>--</p>
+
+<h3>2.18.2表结构</h3>
+
+<table><thead>
+<tr>
+<th style="text-align: left">字段名称</th>
+<th>字段描述</th>
+<th>数据类型</th>
+<th>主键</th>
+<th>为空</th>
+<th>说明</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">ID_</td>
+<td></td>
+<td>varchar(64)</td>
+<td>√</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">REV_</td>
+<td></td>
+<td>integer</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">EVENT_TYPE_</td>
+<td></td>
+<td>varchar(255)</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">EVENT_NAME_</td>
+<td></td>
+<td>varchar(255)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">EXECUTION_ID_</td>
+<td></td>
+<td>varchar(64)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">PROC_INST_ID_</td>
+<td></td>
+<td>varchar(64)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">ACTIVITY_ID_</td>
+<td>活动实例id</td>
+<td>varchar(64)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">CONFIGURATION_</td>
+<td>配置</td>
+<td>varchar(255)</td>
+<td></td>
+<td>√</td>
+<td>配置</td>
+</tr>
+<tr>
+<td style="text-align: left">CREATED_</td>
+<td>是否创建</td>
+<td>timestamp(3)</td>
+<td></td>
+<td></td>
+<td>当前系统时间戳</td>
+</tr>
+<tr>
+<td style="text-align: left">PROC_DEF_ID_</td>
+<td></td>
+<td>varchar(64)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">TENANT_ID_</td>
+<td></td>
+<td>varchar(255)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+</tbody></table>
+
+<h2>2.19 <a name="ACT_RU_EXECUTION"></a> ACT_RU_EXECUTION</h2>
+
+<h3>2.19.1描述</h3>
+
+<p>流程执行记录表。</p>
+
+<h3>2.19.2表结构</h3>
+
+<table><thead>
+<tr>
+<th style="text-align: left">字段名称</th>
+<th>字段描述</th>
+<th>数据类型</th>
+<th>主键</th>
+<th>为空</th>
+<th>说明</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">ID_</td>
+<td></td>
+<td>varchar(64)</td>
+<td>√</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">REV_</td>
+<td></td>
+<td>integer</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">PROC_INST_ID_</td>
+<td></td>
+<td>varchar(64)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">BUSINESS_KEY_</td>
+<td>业务主键key</td>
+<td>varchar(255)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">PARENT_ID_</td>
+<td>父节点实例id</td>
+<td>varchar(64)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">PROC_DEF_ID_</td>
+<td>流程定义id</td>
+<td>varchar(64)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">SUPER_EXEC_</td>
+<td></td>
+<td>varchar(64)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">ACT_ID_</td>
+<td>节点实例id</td>
+<td>varchar(255)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">IS_ACTIVE_</td>
+<td>是否存活</td>
+<td>TINYINT</td>
+<td></td>
+<td>√</td>
+<td>节点实例ID即</td>
+</tr>
+<tr>
+<td style="text-align: left">ACT_HI_ACTINST中ID</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">IS_CONCURRENT_</td>
+<td>是否并行</td>
+<td>TINYINT</td>
+<td></td>
+<td>√</td>
+<td>true／false</td>
+</tr>
+<tr>
+<td style="text-align: left">IS_SCOPE_</td>
+<td></td>
+<td>TINYINT</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">IS_EVENT_SCOPE_</td>
+<td></td>
+<td>TINYINT</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">SUSPENSION_STATE_</td>
+<td>是否挂起</td>
+<td>integer</td>
+<td></td>
+<td>√</td>
+<td>1，激活。2，挂起</td>
+</tr>
+<tr>
+<td style="text-align: left">CACHED_ENT_STATE_</td>
+<td></td>
+<td>integer</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">TENANT_ID_</td>
+<td></td>
+<td>varchar(255)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">NAME_</td>
+<td></td>
+<td>varchar(255)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">LOCK_TIME_</td>
+<td></td>
+<td>timestamp(3)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+</tbody></table>
+
+<h2>2.20 <a name="ACT_RU_IDENTITYLINK"></a> ACT_RU_IDENTITYLINK</h2>
+
+<h3>2.20.1描述</h3>
+
+<p>任务参与者数据表。主要存储当前节点参与者的信息。</p>
+
+<h3>2.20.2表结构</h3>
+
+<table><thead>
+<tr>
+<th style="text-align: left">字段名称</th>
+<th>字段描述</th>
+<th>数据类型</th>
+<th>主键</th>
+<th>为空</th>
+<th>说明</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">ID_</td>
+<td></td>
+<td>varchar(64)</td>
+<td>√</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">REV_</td>
+<td></td>
+<td>integer</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">GROUP_ID_</td>
+<td></td>
+<td>varchar(255)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">TYPE_</td>
+<td></td>
+<td>varchar(255)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">USER_ID_</td>
+<td></td>
+<td>varchar(255)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">TASK_ID_</td>
+<td></td>
+<td>varchar(64)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">PROC_INST_ID_</td>
+<td>流程实例id</td>
+<td>varchar(64)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">PROC_DEF_ID_</td>
+<td>流程定义id</td>
+<td>varchar(64)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+</tbody></table>
+
+<h2>2.21 <a name="ACT_RU_JOB"></a> ACT_RU_JOB</h2>
+
+<h3>2.21.1描述</h3>
+
+<p>运行时定时任务数据表。</p>
+
+<h3>2.21.2表结构</h3>
+
+<table><thead>
+<tr>
+<th style="text-align: left">字段名称</th>
+<th>字段描述</th>
+<th>数据类型</th>
+<th>主键</th>
+<th>为空</th>
+<th>说明</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">ID_</td>
+<td></td>
+<td>varchar(64)</td>
+<td>√</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">REV_</td>
+<td></td>
+<td>integer</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">TYPE_</td>
+<td></td>
+<td>varchar(255)</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">LOCK_EXP_TIME_</td>
+<td>锁定释放时间</td>
+<td>timestamp(3)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">LOCK_OWNER_</td>
+<td>挂起者</td>
+<td>varchar(255)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">EXCLUSIVE_</td>
+<td></td>
+<td>boolean</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">EXECUTION_ID_</td>
+<td></td>
+<td>varchar(64)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">PROCESS_INSTANCE_ID_</td>
+<td></td>
+<td>varchar(64)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">PROC_DEF_ID_</td>
+<td></td>
+<td>varchar(64)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">RETRIES_</td>
+<td></td>
+<td>integer</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">EXCEPTION_STACK_ID_</td>
+<td>异常id</td>
+<td>varchar(64)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">EXCEPTION_MSG_</td>
+<td>异常信息</td>
+<td>varchar(4000)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">DUEDATE_</td>
+<td>到期时间</td>
+<td>timestamp(3)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">REPEAT_</td>
+<td>重复</td>
+<td>varchar(255)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">HANDLER_TYPE_</td>
+<td>处理类型</td>
+<td>varchar(255)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">HANDLER_CFG_</td>
+<td></td>
+<td>varchar(4000)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">TENANT_ID_</td>
+<td></td>
+<td>varchar(255)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+</tbody></table>
+
+<h2>2.22 <a name="ACT_RU_TASK"></a> ACT_RU_TASK</h2>
+
+<h3>2.22.1描述</h3>
+
+<p>行时任务数据表。</p>
+
+<h3>2.22.2表结构</h3>
+
+<table><thead>
+<tr>
+<th style="text-align: left">字段名称</th>
+<th>字段描述</th>
+<th>数据类型</th>
+<th>主键</th>
+<th>为空</th>
+<th>说明</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">ID_</td>
+<td></td>
+<td>varchar(64)</td>
+<td>√</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">REV_</td>
+<td></td>
+<td>integer</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">EXECUTION_ID_</td>
+<td></td>
+<td>varchar(64)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">PROC_INST_ID_</td>
+<td></td>
+<td>varchar(64)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">PROC_DEF_ID_</td>
+<td></td>
+<td>varchar(64)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">NAME_</td>
+<td></td>
+<td>varchar(255)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">PARENT_TASK_ID_</td>
+<td>父节点实例id</td>
+<td>varchar(64)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">DESCRIPTION_</td>
+<td>节点定义描述</td>
+<td>varchar(4000)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">TASK_DEF_KEY_</td>
+<td>节点定义的KEY</td>
+<td>varchar(255)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">OWNER_</td>
+<td>委托人</td>
+<td>varchar(255)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">ASSIGNEE_</td>
+<td>执行人</td>
+<td>varchar(255)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">DELEGATION_</td>
+<td>委托类型</td>
+<td>varchar(64)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">PRIORITY_</td>
+<td></td>
+<td>integer</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">CREATE_TIME_</td>
+<td></td>
+<td>timestamp(3)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">DUE_DATE_</td>
+<td></td>
+<td>datetime(3)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">CATEGORY_</td>
+<td></td>
+<td>varchar(255)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">SUSPENSION_STATE_</td>
+<td></td>
+<td>integer</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">TENANT_ID_</td>
+<td></td>
+<td>varchar(255)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">FORM_KEY_</td>
+<td></td>
+<td>varchar(255)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+</tbody></table>
+
+<h2>2.23 <a name="ACT_RU_VARIABLE"></a> ACT_RU_VARIABLE</h2>
+
+<h3>2.23.1描述</h3>
+
+<p>运行时流程变量数据表。</p>
+
+<h3>2.24.2表结构</h3>
+
+<table><thead>
+<tr>
+<th style="text-align: left">字段名称</th>
+<th>字段描述</th>
+<th>数据类型</th>
+<th>主键</th>
+<th>为空</th>
+<th>说明</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">ID_</td>
+<td></td>
+<td>varchar(64)</td>
+<td>√</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">REV_</td>
+<td></td>
+<td>integer</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">TYPE_</td>
+<td></td>
+<td>varchar(255)</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">NAME_</td>
+<td></td>
+<td>varchar(255)</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">EXECUTION_ID_</td>
+<td></td>
+<td>varchar(64)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">PROC_INST_ID_</td>
+<td></td>
+<td>varchar(64)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">TASK_ID_</td>
+<td></td>
+<td>varchar(64)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">BYTEARRAY_ID_</td>
+<td></td>
+<td>varchar(64)</td>
+<td></td>
+<td>√</td>
+<td>字节表的ID</td>
+</tr>
+<tr>
+<td style="text-align: left">（ACT_GE_BYTEARRAY）</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">DOUBLE_</td>
+<td></td>
+<td>double</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">LONG_</td>
+<td></td>
+<td>bigint</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">TEXT_</td>
+<td></td>
+<td>varchar(4000)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: left">TEXT2_</td>
+<td></td>
+<td>varchar(4000)</td>
+<td></td>
+<td>√</td>
+<td></td>
+</tr>
+</tbody></table>
+
+  </section>
+</article>
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- OneV's Den -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-3324997515191619"
+     data-ad-slot="9170309685"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+<section class="read-more">
+   
+   
+   
+   
+   <div class="read-more-item">
+       <span class="read-more-item-dim">更早的文章</span>
+       <h2 class="post-list__post-title post-title"><a href="/2016/10/WorkFlow-Getting-Started/" title="link to 工作流入门">工作流入门</a></h2>
+       <p class="excerpt">工作流（Work_Flow）引擎，用于各种信息化系统中。由开发人员共同制定的 BPMN 2.0 规范定义，之后布置到工作流引擎中，驱动业务流程的进行。Activiti 支持 BPMN 2.0 规范，并且在其基础上进行扩展。第一部分：初识 Activiti1.1, Activiti 采用 MyBatis 持久层框架，实现数据交换。1.2, Activiti 流程设计工具 基于 Eclipse IDE 的 Eclipse Desiger。基于 WEB 的 Activiti Modeler。1....&hellip;</p>
+       <div class="post-list__meta"><time datetime="2016-10-07 13:32:24 +0800" class="post-list__meta--date date">2016-10-07</time> &#8226; <span class="post-list__meta--tags tags"></span><a class="btn-border-small" href=/2016/10/WorkFlow-Getting-Started/>继续阅读</a></div>
+   </div>
+   
+</section>
+
+<section class="post-comments">
+  
+  
+  
+  
+</section>
+
+
+            <section class="footer">
+    <footer>
+    	<span class="footer__copyright">本站点采用<a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享 署名-非商业性使用-相同方式共享 4.0 国际 许可协议</a></span>
+        <span class="footer__copyright">由 <a href="https://jekyllrb.com">Jekyll</a> 于 2016-10-21 生成，感谢 <a href="https://www.digitalocean.com/?refcode=30ed2d146762">Digital Ocean</a> 为本站提供稳定的 VPS 服务</span>
+        <span class="footer__copyright">本站由 <a href="https://github.com/onevcat">@onevcat</a> 创建，采用 <a href="https://github.com/onevcat/vno-jekyll">Vno - Jekyll</a> 作为主题，您可以在 GitHub 找到<a href="https://github.com/onevcat/OneV-s-Den">本站源码</a> - &copy; 2016</span>
+    </footer>
+</section>
+
+        </div>
+    </div>
+    
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<script type="text/javascript" src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script type="text/javascript" src="/js/main.js"></script>
+
+
+
+    
+  </body>
+
+</html>
