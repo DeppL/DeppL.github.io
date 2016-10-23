@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <title>工作流 API 介绍，及示例</title>
+  <meta name="description" content="group: management, sales, marketing, engineering, user, admin.user: kermit, gonzo, fozzie.">
+  <meta name="author" content="Wei Wang">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="工作流 API 介绍，及示例">
+  <meta name="twitter:description" content="group: management, sales, marketing, engineering, user, admin.user: kermit, gonzo, fozzie.">
+  
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="工作流 API 介绍，及示例">
+  <meta property="og:description" content="group: management, sales, marketing, engineering, user, admin.user: kermit, gonzo, fozzie.">
+  
+  <link rel="icon" type="image/png" href="/assets/images/favicon.png" />
+  <link href="/assets/images/favicon.png" rel="shortcut icon" type="image/png">
+  
+  <link rel="stylesheet" href="/css/main.css">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
+  <link rel="canonical" href="http://localhost:4000/2016/10/Activiti-API/">
+  <link rel="alternate" type="application/rss+xml" title="DeppL's Blog" href="http://localhost:4000/feed.xml">
+  
+  <meta name="google-site-verification" content="1-1ZlHoRvM0T2FqPbW2S-qLgYXN6rsn52kErlMPd_gw" />
+  
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+    
+    <header class="panel-cover panel-cover--collapsed" style="background-image: url('/assets/images/background-cover.jpg')">
+  <div class="panel-main">
+
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/#blog" title="前往 DeppL's Blog 的主页" class="blog-button"><img src="/assets/images/avatar.jpg" width="80" alt="DeppL's Blog logo" class="panel-cover__logo logo" /></a>
+        <h1 class="panel-cover__title panel-title"><a href="/#blog" title="link to homepage for DeppL's Blog" class="blog-button">DeppL's Blog</a></h1>
+
+        
+        <span class="panel-cover__subtitle panel-subtitle">上善若水，人淡如菊</span>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">这里是 余亮 的 Blog</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+        
+        
+        <p class="panel-cover__description">Blog Designed By <a href="https://github.com/onevcat">@onevcat</a></p>
+        
+        
+        <div class="navigation-wrapper">
+          <div>
+            <nav class="cover-navigation cover-navigation--primary">
+              <ul class="navigation">
+                <li class="navigation__item"><a href="/#blog" title="访问博客" class="blog-button">博客</a></li>
+                
+              </ul>
+            </nav>
+          </div>
+          
+          <div><nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  
+  <!-- Weibo -->
+  <li class="navigation__item">
+    <a href="http://weibo.com/u/5826147819" title="@u/5826147819 的微博" target="_blank">
+      <i class='social fa fa-weibo'></i>
+      <span class="label">Weibo</span>
+    </a>
+  </li>
+  
+
+  
+  <!-- Github -->
+  <li class="navigation__item">
+    <a href="https://github.com/deppl" title="@deppl 的 Github" target="_blank">
+      <i class='social fa fa-github'></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+  
+  
+  
+  <!-- Twitter -->
+  <li class="navigation__item">
+    <a href="http://twitter.com/deppl_yl" title="@deppl_yl" target="_blank">
+      <i class='social fa fa-twitter'></i>
+      <span class="label">Twitter</span>
+    </a>
+  </li>
+  
+
+  
+
+  <!-- RSS 
+  <li class="navigation__item">
+    <a href="/feed.xml" rel="author" title="RSS" target="_blank">
+      <i class='social fa fa-rss'></i>
+      <span class="label">RSS</span>
+    </a>
+  </li>
+  -->
+
+  
+  <!-- Email -->
+  <li class="navigation__item">
+    <a href="mailto:deppl.yl@gmail.com" title="Contact me">
+      <i class='social fa fa-envelope'></i>
+      <span class="label">Email</span>
+    </a>
+  </li>
+  
+
+  </ul>
+</nav>
+</div>
+        </div>
+      </div>
+    </div>
+    
+    
+    <div class="panel-cover--overlay cover-slate"></div>
+    
+  </div>
+</header>
+
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single" itemscope itemtype="http://schema.org/BlogPosting">
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2016-10-22 13:32:24 +0800" itemprop="datePublished" class="post-meta__date date">2016-10-22</time> &#8226; <span class="post-meta__tags tags"></span>
+    </div>
+    <h1 class="post-title">工作流 API 介绍，及示例</h1>
+  </header>
+
+  <section class="post">
+    <blockquote>
+<p>group: management, sales, marketing, engineering, user, admin.</p>
+
+<p>user: kermit, gonzo, fozzie.</p>
+</blockquote>
+
+<table><thead>
+<tr>
+<th></th>
+<th style="text-align: center">management</th>
+<th style="text-align: center">sales</th>
+<th style="text-align: center">marketing</th>
+<th style="text-align: center">engineering</th>
+<th style="text-align: center">user</th>
+<th style="text-align: center">admin</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>kermit</td>
+<td style="text-align: center">√</td>
+<td style="text-align: center">√</td>
+<td style="text-align: center">√</td>
+<td style="text-align: center">√</td>
+<td style="text-align: center">√</td>
+<td style="text-align: center">√</td>
+</tr>
+<tr>
+<td>gonzo</td>
+<td style="text-align: center">√</td>
+<td style="text-align: center">√</td>
+<td style="text-align: center">√</td>
+<td style="text-align: center"></td>
+<td style="text-align: center">√</td>
+<td style="text-align: center"></td>
+</tr>
+<tr>
+<td>fozzie</td>
+<td style="text-align: center"></td>
+<td style="text-align: center"></td>
+<td style="text-align: center">√</td>
+<td style="text-align: center">√</td>
+<td style="text-align: center">√</td>
+<td style="text-align: center"></td>
+</tr>
+</tbody></table>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java">目录：
+│ 
+├── 创建 ProcessEngine。
+│     ├─ Java 代码创建
+│     ├─ XML 创建
+│
+│
+├── IdentityService 
+│     ├─ user 添加用户
+│     ├─ group 添加组
+│     ├─ membership 添加 用户与组 的关系
+│
+│
+├── Deploy 部署
+│     ├─ bpmn 流程文件 (diagrams/VacationRequest.bpmn)
+│     ├─ 流程部署
+│
+│
+├── 流程代码演示
+│     ├─ 由部署文件生成流程实例
+│     ├─ 经理驳回
+│     ├─ 经理同意
+│ 
+│</code></pre></figure>
+
+<h2>一、创建 ProcessEngine。</h2>
+
+<h3>1.1， Java 代码创建</h3>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java">ProcessEngineConfiguration processEngineConfiguration = ProcessEngineConfiguration.createStandaloneProcessEngineConfiguration();
+processEngineConfiguration.setJdbcDriver(&quot;com.mysql.jdbc.Driver&quot;)
+                        .setJdbcUrl(&quot;jdbc:mysql://localhost:3306/activiti_sql&quot;)
+                        .setJdbcUsername(&quot;root&quot;)
+                        .setJdbcPassword(&quot;root&quot;)
+                        .setDatabaseSchemaUpdate(ProcessEngineConfiguration.DB_SCHEMA_UPDATE_TRUE);
+ProcessEngine processEngine = processEngineConfiguration.buildProcessEngine();</code></pre></figure>
+
+<h3>1.2， XML 创建</h3>
+
+<p>创建 activiti.cfg.xml</p>
+
+<figure class="highlight"><pre><code class="language-xml" data-lang="xml">&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+       xmlns:context=&quot;http://www.springframework.org/schema/context&quot;
+       xmlns:tx=&quot;http://www.springframework.org/schema/tx&quot;
+       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd&quot;&gt;
+
+    &lt;bean id=&quot;processEngineConfiguration&quot; class=&quot;org.activiti.engine.impl.cfg.StandaloneProcessEngineConfiguration&quot;&gt;
+        &lt;property name=&quot;jdbcDriver&quot; value=&quot;com.mysql.jdbc.Driver&quot;&gt;&lt;/property&gt;
+        &lt;property name=&quot;jdbcUrl&quot; value=&quot;jdbc:mysql://localhost:3306/activiti_sql&quot;&gt;&lt;/property&gt;
+        &lt;property name=&quot;jdbcUsername&quot; value=&quot;root&quot;&gt;&lt;/property&gt;
+        &lt;property name=&quot;jdbcPassword&quot; value=&quot;root&quot;&gt;&lt;/property&gt;
+        &lt;property name=&quot;databaseSchemaUpdate&quot; value=&quot;true&quot;&gt;&lt;/property&gt;
+    &lt;/bean&gt;
+&lt;/beans&gt;</code></pre></figure>
+
+<p>java中代码</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java">ProcessEngine processEngine = ProcessEngines.getDefaultProcessEngine();</code></pre></figure>
+
+<h2>二、IdentityService</h2>
+
+<h3>2.1， user 添加用户</h3>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java">IdentityService identityService = processEngine.getIdentityService();
+User kermit = identityService.newUser(&quot;kermit&quot;);
+kermit.setFirstName(&quot;Kermit&quot;);
+kermit.setLastName(&quot;The Frog&quot;);
+kermit.setEmail(&quot;kermit@activiti.org&quot;);
+kermit.setPassword(&quot;kermit&quot;);
+identityService.saveUser(kermit);</code></pre></figure>
+
+<h3>2.2， group 添加组</h3>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java">Group group1 = identityService.newGroup(&quot;management&quot;);
+group1.setName(&quot;Management&quot;);
+group1.setType(&quot;assignment&quot;);
+identityService.saveGroup(group1);</code></pre></figure>
+
+<h3>2.3， membership 添加 用户与组 的关系</h3>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java">identityService.createMembership(&quot;kermit&quot;, &quot;management&quot;);</code></pre></figure>
+
+<h2>三、Deploy 部署</h2>
+
+<h3>3.1， bpmn 流程文件 (diagrams/VacationRequest.bpmn)</h3>
+
+<figure class="highlight"><pre><code class="language-xml" data-lang="xml">&lt;process id=&quot;vacationRequest&quot; name=&quot;Vacation Request&quot; isExecutable=&quot;true&quot;&gt;
+    &lt;startEvent id=&quot;request&quot; activiti:initiator=&quot;employeeName&quot;&gt;
+      &lt;extensionElements&gt;
+        &lt;activiti:formProperty id=&quot;numberOfDays&quot; name=&quot;Number of days&quot; type=&quot;long&quot; required=&quot;true&quot;&gt;&lt;/activiti:formProperty&gt;
+        &lt;activiti:formProperty id=&quot;startDate&quot; name=&quot;First day of holiday (dd-MM-yyy)&quot; type=&quot;date&quot; datePattern=&quot;dd-MM-yyyy hh:mm&quot; required=&quot;true&quot;&gt;&lt;/activiti:formProperty&gt;
+        &lt;activiti:formProperty id=&quot;vacationMotivation&quot; name=&quot;Motivation&quot; type=&quot;string&quot;&gt;&lt;/activiti:formProperty&gt;
+      &lt;/extensionElements&gt;
+    &lt;/startEvent&gt;
+    &lt;sequenceFlow id=&quot;flow1&quot; sourceRef=&quot;request&quot; targetRef=&quot;handleRequest&quot;&gt;&lt;/sequenceFlow&gt;
+    &lt;userTask id=&quot;handleRequest&quot; name=&quot;Handle vacation request&quot; activiti:candidateGroups=&quot;management&quot;&gt;
+      &lt;documentation&gt;${employeeName} would like to take ${numberOfDays} day(s) of vacation (Motivation: ${vacationMotivation}).&lt;/documentation&gt;
+      &lt;extensionElements&gt;
+        &lt;activiti:formProperty id=&quot;vacationApproved&quot; name=&quot;Do you approve this vacation&quot; type=&quot;enum&quot; required=&quot;true&quot;&gt;
+          &lt;activiti:value id=&quot;true&quot; name=&quot;Approve&quot;&gt;&lt;/activiti:value&gt;
+          &lt;activiti:value id=&quot;false&quot; name=&quot;Reject&quot;&gt;&lt;/activiti:value&gt;
+        &lt;/activiti:formProperty&gt;
+        &lt;activiti:formProperty id=&quot;managerMotivation&quot; name=&quot;Motivation&quot; type=&quot;string&quot;&gt;&lt;/activiti:formProperty&gt;
+      &lt;/extensionElements&gt;
+    &lt;/userTask&gt;
+    &lt;sequenceFlow id=&quot;flow2&quot; sourceRef=&quot;handleRequest&quot; targetRef=&quot;requestApprovedDecision&quot;&gt;&lt;/sequenceFlow&gt;
+    &lt;exclusiveGateway id=&quot;requestApprovedDecision&quot; name=&quot;Request approved?&quot;&gt;&lt;/exclusiveGateway&gt;
+    &lt;sequenceFlow id=&quot;flow3&quot; sourceRef=&quot;requestApprovedDecision&quot; targetRef=&quot;sendApprovalMail&quot;&gt;
+      &lt;conditionExpression xsi:type=&quot;tFormalExpression&quot;&gt;&lt;![CDATA[${vacationApproved == &#39;true&#39;}]]&gt;&lt;/conditionExpression&gt;
+    &lt;/sequenceFlow&gt;
+    &lt;userTask id=&quot;sendApprovalMail&quot; name=&quot;Send confirmation e-mail&quot;&gt;&lt;/userTask&gt;
+    &lt;sequenceFlow id=&quot;flow4&quot; sourceRef=&quot;sendApprovalMail&quot; targetRef=&quot;theEnd1&quot;&gt;&lt;/sequenceFlow&gt;
+    &lt;endEvent id=&quot;theEnd1&quot;&gt;&lt;/endEvent&gt;
+    &lt;sequenceFlow id=&quot;flow5&quot; sourceRef=&quot;requestApprovedDecision&quot; targetRef=&quot;adjustVacationRequestTask&quot;&gt;
+      &lt;conditionExpression xsi:type=&quot;tFormalExpression&quot;&gt;&lt;![CDATA[${vacationApproved == &#39;false&#39;}]]&gt;&lt;/conditionExpression&gt;
+    &lt;/sequenceFlow&gt;
+    &lt;userTask id=&quot;adjustVacationRequestTask&quot; name=&quot;Adjust vacation request&quot; activiti:assignee=&quot;${employeeName}&quot;&gt;
+      &lt;documentation&gt;Your manager has disapproved your vacation request for ${numberOfDays} days.
+        Reason: ${managerMotivation}&lt;/documentation&gt;
+      &lt;extensionElements&gt;
+        &lt;activiti:formProperty id=&quot;numberOfDays&quot; name=&quot;Number of days&quot; type=&quot;long&quot; required=&quot;true&quot;&gt;&lt;/activiti:formProperty&gt;
+        &lt;activiti:formProperty id=&quot;startDate&quot; name=&quot;First day of holiday (dd-MM-yyy)&quot; type=&quot;date&quot; datePattern=&quot;dd-MM-yyyy hh:mm&quot; required=&quot;true&quot;&gt;&lt;/activiti:formProperty&gt;
+        &lt;activiti:formProperty id=&quot;vacationMotivation&quot; name=&quot;Motivation&quot; type=&quot;string&quot;&gt;&lt;/activiti:formProperty&gt;
+        &lt;activiti:formProperty id=&quot;resendRequest&quot; name=&quot;Resend vacation request to manager?&quot; type=&quot;enum&quot; required=&quot;true&quot;&gt;
+          &lt;activiti:value id=&quot;true&quot; name=&quot;Yes&quot;&gt;&lt;/activiti:value&gt;
+          &lt;activiti:value id=&quot;false&quot; name=&quot;No&quot;&gt;&lt;/activiti:value&gt;
+        &lt;/activiti:formProperty&gt;
+      &lt;/extensionElements&gt;
+    &lt;/userTask&gt;
+    &lt;sequenceFlow id=&quot;flow6&quot; sourceRef=&quot;adjustVacationRequestTask&quot; targetRef=&quot;resendRequestDecision&quot;&gt;&lt;/sequenceFlow&gt;
+    &lt;exclusiveGateway id=&quot;resendRequestDecision&quot; name=&quot;Resend Request Decision&quot;&gt;&lt;/exclusiveGateway&gt;
+    &lt;sequenceFlow id=&quot;flow8&quot; sourceRef=&quot;resendRequestDecision&quot; targetRef=&quot;handleRequest&quot;&gt;
+      &lt;conditionExpression xsi:type=&quot;tFormalExpression&quot;&gt;&lt;![CDATA[${resendRequest == &#39;true&#39;}]]&gt;&lt;/conditionExpression&gt;
+    &lt;/sequenceFlow&gt;
+    &lt;endEvent id=&quot;theEnd2&quot;&gt;&lt;/endEvent&gt;
+    &lt;sequenceFlow id=&quot;flow9&quot; sourceRef=&quot;resendRequestDecision&quot; targetRef=&quot;theEnd2&quot;&gt;
+        &lt;conditionExpression xsi:type=&quot;tFormalExpression&quot;&gt;&lt;![CDATA[${resendRequest == &#39;false&#39;}]]&gt;&lt;/conditionExpression&gt;
+    &lt;/sequenceFlow&gt;
+  &lt;/process&gt;</code></pre></figure>
+
+<h3>3.2， 流程部署</h3>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java">RepositoryService repositoryService = processEngine.getRepositoryService();
+DeploymentBuilder deploymentBuilder = repositoryService.createDeployment();
+
+deploymentBuilder.addClasspathResource(&quot;diagrams/VacationRequest.bpmn&quot;)
+                         .addClasspathResource(&quot;diagrams/VacationRequest.png&quot;)
+                         .name(&quot;请假测试&quot;)
+                         .category(&quot;请假&quot;);
+deploymentBuilder.deploy();</code></pre></figure>
+
+<h2>四、流程代码演示</h2>
+
+<h3>4.1， 由部署文件生成流程实例</h3>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java">identityService.setAuthenticatedUserId(&quot;fozzie&quot;); // 配合 activiti:initiator 使用
+ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery()
+                    .processDefinitionKey(&quot;vacationRequest&quot;)
+                    .orderByProcessDefinitionId()
+                    .desc().list().get(0);
+Map&lt;String, Object&gt; variables = new HashMap&lt;String, Object&gt;();
+variables.put(&quot;numberOfDays&quot;, &quot;3&quot;);
+variables.put(&quot;vacationMotivation&quot;, &quot;请假原因。&quot;);
+variables.put(&quot;startDate&quot;, new Date());
+runtimeService.startProcessInstanceById(processDefinition.getId(),variables);</code></pre></figure>
+
+<h3>4.2， 经理驳回</h3>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java">// 经理获得 任务
+User manager = identityService.createUserQuery()
+                            .memberOfGroup(&quot;management&quot;)
+                            .orderByUserId().desc().list().get(0);
+Task task = taskService.createTaskQuery()
+                            .taskCandidateGroup(&quot;management&quot;)
+                            .orderByTaskId().desc().list().get(0);
+taskService.claim(task.getId(), manager.getId());
+
+// 经理执行 reject   &quot;vacationApproved&quot;
+Map&lt;String, Object&gt; variables = new HashMap&lt;String, Object&gt;();
+variables.put(&quot;vacationApproved&quot;, &quot;false&quot;);
+taskService.complete(task.getId(), variables);
+
+// 员工修改内容
+Task reSentTask = taskService.createTaskQuery()
+                        .taskInvolvedUser(&quot;fozzie&quot;)
+                        .orderByTaskId().desc().list().get(0);
+Map&lt;String, Object&gt; adjustVar = new HashMap&lt;String, Object&gt;();
+adjustVar.put(&quot;numberOfDays&quot;, 3);
+adjustVar.put(&quot;vacationMotivation&quot;, &quot;2&quot;);
+adjustVar.put(&quot;resendRequest&quot;, &quot;true&quot;);
+taskService.complete(reSentTask.getId(), adjustVar);</code></pre></figure>
+
+<h3>4.3，  经理同意</h3>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java">// 经理获得 任务
+User manager = identityService.createUserQuery()
+                            .memberOfGroup(&quot;management&quot;)
+                            .orderByUserId().desc().list().get(0);
+Task task = taskService.createTaskQuery()
+                            .taskCandidateGroup(&quot;management&quot;)
+                            .orderByTaskId().desc().list().get(0);
+taskService.claim(task.getId(), manager.getId());
+
+// 经理执行 approve   &quot;vacationApproved&quot;
+Map&lt;String, Object&gt; variables = new HashMap&lt;String, Object&gt;();
+variables.put(&quot;vacationApproved&quot;, &quot;true&quot;);
+taskService.complete(task.getId(), variables);
+
+// 员工发送邮件
+Task mailTask = taskService.createTaskQuery()
+                            .taskInvolvedUser(&quot;fozzie&quot;)
+                            .orderByTaskId().desc().list().get(0);
+taskService.complete(mailTask.getId());</code></pre></figure>
+
+  </section>
+</article>
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- OneV's Den -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-3324997515191619"
+     data-ad-slot="9170309685"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+<section class="read-more">
+   
+   
+   
+   
+   <div class="read-more-item">
+       <span class="read-more-item-dim">更早的文章</span>
+       <h2 class="post-list__post-title post-title"><a href="/2016/10/Activiti-%E6%95%B0%E6%8D%AE%E5%BA%93%E8%A1%A8/" title="link to 工作流数据库表">工作流数据库表</a></h2>
+       <p class="excerpt">一，数据库表结构（Activiti 5.21.0）1.1 表单分类ACT_RE_*：RepositoryService 接口。包含流程定义（BPMN XML），流程资源（png）等文件ACT_RU_*：RuntimeService 接口。运行时的数据，包含流程变量，用户任务，等运行时数据。流程实例结束时，删除记录。ACT_ID_*：IdentityService 接口。包含用户，组 等。 ACT_HI_*：HistoryService 接口。包含用户，组 等。ACT_GE_*：全局通用数据...&hellip;</p>
+       <div class="post-list__meta"><time datetime="2016-10-20 13:32:24 +0800" class="post-list__meta--date date">2016-10-20</time> &#8226; <span class="post-list__meta--tags tags"></span><a class="btn-border-small" href=/2016/10/Activiti-%E6%95%B0%E6%8D%AE%E5%BA%93%E8%A1%A8/>继续阅读</a></div>
+   </div>
+   
+</section>
+
+<section class="post-comments">
+  
+  
+  
+  
+</section>
+
+
+            <section class="footer">
+    <footer>
+    	<span class="footer__copyright">本站点采用<a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享 署名-非商业性使用-相同方式共享 4.0 国际 许可协议</a></span>
+        <span class="footer__copyright">由 <a href="https://jekyllrb.com">Jekyll</a> 于 2016-10-23 生成，感谢 <a href="https://www.digitalocean.com/?refcode=30ed2d146762">Digital Ocean</a> 为本站提供稳定的 VPS 服务</span>
+        <span class="footer__copyright">本站由 <a href="https://github.com/onevcat">@onevcat</a> 创建，采用 <a href="https://github.com/onevcat/vno-jekyll">Vno - Jekyll</a> 作为主题，您可以在 GitHub 找到<a href="https://github.com/onevcat/OneV-s-Den">本站源码</a> - &copy; 2016</span>
+    </footer>
+</section>
+
+        </div>
+    </div>
+    
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<script type="text/javascript" src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script type="text/javascript" src="/js/main.js"></script>
+
+
+
+    
+  </body>
+
+</html>
