@@ -142,7 +142,7 @@
             <article class="post-container post-container--single" itemscope itemtype="http://schema.org/BlogPosting">
   <header class="post-header">
     <div class="post-meta">
-      <time datetime="2016-10-07 13:32:24 +0800" itemprop="datePublished" class="post-meta__date date">2016-10-07</time> &#8226; <span class="post-meta__tags tags"></span>
+      <time datetime="2016-10-14 13:32:24 +0800" itemprop="datePublished" class="post-meta__date date">2016-10-14</time> &#8226; <span class="post-meta__tags tags"></span>
     </div>
     <h1 class="post-title">工作流入门</h1>
   </header>
@@ -173,9 +173,9 @@
 <li>Activiti Rest ： 提供 Restful 风格的服务，允许客户端以 JSON 的方式与引擎的 Rest API 交互，可以跨平台，跨语言开发。</li>
 </ul>
 
-<h2><a name="Environment-Part"></a>第二部分：环境搭建</h2>
+<h2><a name="Environment-Part"></a>第二部分：Activiti介绍</h2>
 
-<p>2.1, Activiti 下载 ： <a href="http://activiti.org">activiti</a></p>
+<p>2.1, Activiti 下载 ： [activiti][activiti-download]</p>
 
 <p>2.2, Activiti 目录结构：</p>
 
@@ -269,51 +269,29 @@
 
 <p>5&gt; org.activiti.engine.event：</p>
 
-<p>6&gt; org.activiti.engine.form：</p>
+<p>6&gt; org.activiti.engine.form： -&gt; FormService</p>
 
-<p>7&gt; org.activiti.engine.history：</p>
+<p>7&gt; org.activiti.engine.history： -&gt; HistoryService</p>
 
-<p>8&gt; org.activiti.engine.identity：</p>
+<p>8&gt; org.activiti.engine.identity： -&gt; IdentifyService</p>
 
 <p>9&gt; org.activiti.engine.logging：</p>
 
-<p>10&gt; org.activiti.engine.management：</p>
+<p>10&gt; org.activiti.engine.management： -&gt; ManagementService</p>
 
 <p>11&gt; org.activiti.engine.parse：</p>
 
 <p>12&gt; org.activiti.engine.query：</p>
 
-<p>13&gt; org.activiti.engine.repository：</p>
+<p>13&gt; org.activiti.engine.repository： -&gt; RepositoryService</p>
 
-<p>14&gt; org.activiti.engine.runtime：</p>
+<p>14&gt; org.activiti.engine.runtime： -&gt; RuntimeService</p>
 
-<p>15&gt; org.activiti.engine.task：</p>
+<p>15&gt; org.activiti.engine.task： -&gt; TaskService</p>
 
 <p>16&gt; org.activiti.engine.test：</p>
 
 <p>17&gt; org.activiti.engine.test.mock：</p>
-
-<h2><a name="Process-Design-Part"></a>第三部分：流程设计</h2>
-
-<h2><a name="Process-Deploy-Part"></a>第四部分：流程部署</h2>
-
-<ul>
-<li><a href="#Getting-Start"><strong>初识</strong></a></li>
-<li><a href="#Activiti-Part"><strong>Activiti</strong></a></li>
-<li><a href="#Environment-Part"><strong>环境搭建</strong></a></li>
-<li><a href="#Process-Design-Part"><strong>流程设计</strong></a></li>
-<li><a href="#Process-Deploy-Part"><strong>流程部署</strong></a></li>
-</ul>
-
-<p>You’ll find this post in your <code>_posts</code> directory.</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">def print_hi(name)
-  puts &quot;Hi, #{name}&quot;
-end
-print_hi(&#39;Tom&#39;)
-#=&gt; prints &#39;Hi, Tom&#39; to STDOUT.</code></pre></figure>
-
-<p>Check out the [Jekyll docs][jekyll-docs] for more info on how to get the most out of Jekyll.</p>
 
   </section>
 </article>
@@ -354,7 +332,7 @@ print_hi(&#39;Tom&#39;)
             <section class="footer">
     <footer>
     	<span class="footer__copyright">本站点采用<a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享 署名-非商业性使用-相同方式共享 4.0 国际 许可协议</a></span>
-        <span class="footer__copyright">由 <a href="https://jekyllrb.com">Jekyll</a> 于 2016-10-21 生成，感谢 <a href="https://www.digitalocean.com/?refcode=30ed2d146762">Digital Ocean</a> 为本站提供稳定的 VPS 服务</span>
+        <span class="footer__copyright">由 <a href="https://jekyllrb.com">Jekyll</a> 于 2016-10-23 生成，感谢 <a href="https://www.digitalocean.com/?refcode=30ed2d146762">Digital Ocean</a> 为本站提供稳定的 VPS 服务</span>
         <span class="footer__copyright">本站由 <a href="https://github.com/onevcat">@onevcat</a> 创建，采用 <a href="https://github.com/onevcat/vno-jekyll">Vno - Jekyll</a> 作为主题，您可以在 GitHub 找到<a href="https://github.com/onevcat/OneV-s-Den">本站源码</a> - &copy; 2016</span>
     </footer>
 </section>

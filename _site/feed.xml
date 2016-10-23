@@ -5,9 +5,281 @@
     <description>这里是 余亮 的 Blog</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 21 Oct 2016 14:49:21 +0800</pubDate>
-    <lastBuildDate>Fri, 21 Oct 2016 14:49:21 +0800</lastBuildDate>
+    <pubDate>Sun, 23 Oct 2016 15:41:24 +0800</pubDate>
+    <lastBuildDate>Sun, 23 Oct 2016 15:41:24 +0800</lastBuildDate>
     <generator>Jekyll v3.3.0</generator>
+    
+      <item>
+        <title>工作流 API 介绍，及示例</title>
+        <description>&lt;blockquote&gt;
+&lt;p&gt;group: management, sales, marketing, engineering, user, admin.&lt;/p&gt;
+
+&lt;p&gt;user: kermit, gonzo, fozzie.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;table&gt;&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;&lt;/th&gt;
+&lt;th style=&quot;text-align: center&quot;&gt;management&lt;/th&gt;
+&lt;th style=&quot;text-align: center&quot;&gt;sales&lt;/th&gt;
+&lt;th style=&quot;text-align: center&quot;&gt;marketing&lt;/th&gt;
+&lt;th style=&quot;text-align: center&quot;&gt;engineering&lt;/th&gt;
+&lt;th style=&quot;text-align: center&quot;&gt;user&lt;/th&gt;
+&lt;th style=&quot;text-align: center&quot;&gt;admin&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;kermit&lt;/td&gt;
+&lt;td style=&quot;text-align: center&quot;&gt;√&lt;/td&gt;
+&lt;td style=&quot;text-align: center&quot;&gt;√&lt;/td&gt;
+&lt;td style=&quot;text-align: center&quot;&gt;√&lt;/td&gt;
+&lt;td style=&quot;text-align: center&quot;&gt;√&lt;/td&gt;
+&lt;td style=&quot;text-align: center&quot;&gt;√&lt;/td&gt;
+&lt;td style=&quot;text-align: center&quot;&gt;√&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;gonzo&lt;/td&gt;
+&lt;td style=&quot;text-align: center&quot;&gt;√&lt;/td&gt;
+&lt;td style=&quot;text-align: center&quot;&gt;√&lt;/td&gt;
+&lt;td style=&quot;text-align: center&quot;&gt;√&lt;/td&gt;
+&lt;td style=&quot;text-align: center&quot;&gt;&lt;/td&gt;
+&lt;td style=&quot;text-align: center&quot;&gt;√&lt;/td&gt;
+&lt;td style=&quot;text-align: center&quot;&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;fozzie&lt;/td&gt;
+&lt;td style=&quot;text-align: center&quot;&gt;&lt;/td&gt;
+&lt;td style=&quot;text-align: center&quot;&gt;&lt;/td&gt;
+&lt;td style=&quot;text-align: center&quot;&gt;√&lt;/td&gt;
+&lt;td style=&quot;text-align: center&quot;&gt;√&lt;/td&gt;
+&lt;td style=&quot;text-align: center&quot;&gt;√&lt;/td&gt;
+&lt;td style=&quot;text-align: center&quot;&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;&lt;/table&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;目录：
+│ 
+├── 创建 ProcessEngine。
+│     ├─ Java 代码创建
+│     ├─ XML 创建
+│
+│
+├── IdentityService 
+│     ├─ user 添加用户
+│     ├─ group 添加组
+│     ├─ membership 添加 用户与组 的关系
+│
+│
+├── Deploy 部署
+│     ├─ bpmn 流程文件 (diagrams/VacationRequest.bpmn)
+│     ├─ 流程部署
+│
+│
+├── 流程代码演示
+│     ├─ 由部署文件生成流程实例
+│     ├─ 经理驳回
+│     ├─ 经理同意
+│ 
+│&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h2&gt;一、创建 ProcessEngine。&lt;/h2&gt;
+
+&lt;h3&gt;1.1， Java 代码创建&lt;/h3&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;ProcessEngineConfiguration processEngineConfiguration = ProcessEngineConfiguration.createStandaloneProcessEngineConfiguration();
+processEngineConfiguration.setJdbcDriver(&amp;quot;com.mysql.jdbc.Driver&amp;quot;)
+                        .setJdbcUrl(&amp;quot;jdbc:mysql://localhost:3306/activiti_sql&amp;quot;)
+                        .setJdbcUsername(&amp;quot;root&amp;quot;)
+                        .setJdbcPassword(&amp;quot;root&amp;quot;)
+                        .setDatabaseSchemaUpdate(ProcessEngineConfiguration.DB_SCHEMA_UPDATE_TRUE);
+ProcessEngine processEngine = processEngineConfiguration.buildProcessEngine();&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h3&gt;1.2， XML 创建&lt;/h3&gt;
+
+&lt;p&gt;创建 activiti.cfg.xml&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-xml&quot; data-lang=&quot;xml&quot;&gt;&amp;lt;beans xmlns=&amp;quot;http://www.springframework.org/schema/beans&amp;quot;
+       xmlns:context=&amp;quot;http://www.springframework.org/schema/context&amp;quot;
+       xmlns:tx=&amp;quot;http://www.springframework.org/schema/tx&amp;quot;
+       xmlns:xsi=&amp;quot;http://www.w3.org/2001/XMLSchema-instance&amp;quot;
+       xsi:schemaLocation=&amp;quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd&amp;quot;&amp;gt;
+
+    &amp;lt;bean id=&amp;quot;processEngineConfiguration&amp;quot; class=&amp;quot;org.activiti.engine.impl.cfg.StandaloneProcessEngineConfiguration&amp;quot;&amp;gt;
+        &amp;lt;property name=&amp;quot;jdbcDriver&amp;quot; value=&amp;quot;com.mysql.jdbc.Driver&amp;quot;&amp;gt;&amp;lt;/property&amp;gt;
+        &amp;lt;property name=&amp;quot;jdbcUrl&amp;quot; value=&amp;quot;jdbc:mysql://localhost:3306/activiti_sql&amp;quot;&amp;gt;&amp;lt;/property&amp;gt;
+        &amp;lt;property name=&amp;quot;jdbcUsername&amp;quot; value=&amp;quot;root&amp;quot;&amp;gt;&amp;lt;/property&amp;gt;
+        &amp;lt;property name=&amp;quot;jdbcPassword&amp;quot; value=&amp;quot;root&amp;quot;&amp;gt;&amp;lt;/property&amp;gt;
+        &amp;lt;property name=&amp;quot;databaseSchemaUpdate&amp;quot; value=&amp;quot;true&amp;quot;&amp;gt;&amp;lt;/property&amp;gt;
+    &amp;lt;/bean&amp;gt;
+&amp;lt;/beans&amp;gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;java中代码&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;ProcessEngine processEngine = ProcessEngines.getDefaultProcessEngine();&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h2&gt;二、IdentityService&lt;/h2&gt;
+
+&lt;h3&gt;2.1， user 添加用户&lt;/h3&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;IdentityService identityService = processEngine.getIdentityService();
+User kermit = identityService.newUser(&amp;quot;kermit&amp;quot;);
+kermit.setFirstName(&amp;quot;Kermit&amp;quot;);
+kermit.setLastName(&amp;quot;The Frog&amp;quot;);
+kermit.setEmail(&amp;quot;kermit@activiti.org&amp;quot;);
+kermit.setPassword(&amp;quot;kermit&amp;quot;);
+identityService.saveUser(kermit);&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h3&gt;2.2， group 添加组&lt;/h3&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;Group group1 = identityService.newGroup(&amp;quot;management&amp;quot;);
+group1.setName(&amp;quot;Management&amp;quot;);
+group1.setType(&amp;quot;assignment&amp;quot;);
+identityService.saveGroup(group1);&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h3&gt;2.3， membership 添加 用户与组 的关系&lt;/h3&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;identityService.createMembership(&amp;quot;kermit&amp;quot;, &amp;quot;management&amp;quot;);&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h2&gt;三、Deploy 部署&lt;/h2&gt;
+
+&lt;h3&gt;3.1， bpmn 流程文件 (diagrams/VacationRequest.bpmn)&lt;/h3&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-xml&quot; data-lang=&quot;xml&quot;&gt;&amp;lt;process id=&amp;quot;vacationRequest&amp;quot; name=&amp;quot;Vacation Request&amp;quot; isExecutable=&amp;quot;true&amp;quot;&amp;gt;
+    &amp;lt;startEvent id=&amp;quot;request&amp;quot; activiti:initiator=&amp;quot;employeeName&amp;quot;&amp;gt;
+      &amp;lt;extensionElements&amp;gt;
+        &amp;lt;activiti:formProperty id=&amp;quot;numberOfDays&amp;quot; name=&amp;quot;Number of days&amp;quot; type=&amp;quot;long&amp;quot; required=&amp;quot;true&amp;quot;&amp;gt;&amp;lt;/activiti:formProperty&amp;gt;
+        &amp;lt;activiti:formProperty id=&amp;quot;startDate&amp;quot; name=&amp;quot;First day of holiday (dd-MM-yyy)&amp;quot; type=&amp;quot;date&amp;quot; datePattern=&amp;quot;dd-MM-yyyy hh:mm&amp;quot; required=&amp;quot;true&amp;quot;&amp;gt;&amp;lt;/activiti:formProperty&amp;gt;
+        &amp;lt;activiti:formProperty id=&amp;quot;vacationMotivation&amp;quot; name=&amp;quot;Motivation&amp;quot; type=&amp;quot;string&amp;quot;&amp;gt;&amp;lt;/activiti:formProperty&amp;gt;
+      &amp;lt;/extensionElements&amp;gt;
+    &amp;lt;/startEvent&amp;gt;
+    &amp;lt;sequenceFlow id=&amp;quot;flow1&amp;quot; sourceRef=&amp;quot;request&amp;quot; targetRef=&amp;quot;handleRequest&amp;quot;&amp;gt;&amp;lt;/sequenceFlow&amp;gt;
+    &amp;lt;userTask id=&amp;quot;handleRequest&amp;quot; name=&amp;quot;Handle vacation request&amp;quot; activiti:candidateGroups=&amp;quot;management&amp;quot;&amp;gt;
+      &amp;lt;documentation&amp;gt;${employeeName} would like to take ${numberOfDays} day(s) of vacation (Motivation: ${vacationMotivation}).&amp;lt;/documentation&amp;gt;
+      &amp;lt;extensionElements&amp;gt;
+        &amp;lt;activiti:formProperty id=&amp;quot;vacationApproved&amp;quot; name=&amp;quot;Do you approve this vacation&amp;quot; type=&amp;quot;enum&amp;quot; required=&amp;quot;true&amp;quot;&amp;gt;
+          &amp;lt;activiti:value id=&amp;quot;true&amp;quot; name=&amp;quot;Approve&amp;quot;&amp;gt;&amp;lt;/activiti:value&amp;gt;
+          &amp;lt;activiti:value id=&amp;quot;false&amp;quot; name=&amp;quot;Reject&amp;quot;&amp;gt;&amp;lt;/activiti:value&amp;gt;
+        &amp;lt;/activiti:formProperty&amp;gt;
+        &amp;lt;activiti:formProperty id=&amp;quot;managerMotivation&amp;quot; name=&amp;quot;Motivation&amp;quot; type=&amp;quot;string&amp;quot;&amp;gt;&amp;lt;/activiti:formProperty&amp;gt;
+      &amp;lt;/extensionElements&amp;gt;
+    &amp;lt;/userTask&amp;gt;
+    &amp;lt;sequenceFlow id=&amp;quot;flow2&amp;quot; sourceRef=&amp;quot;handleRequest&amp;quot; targetRef=&amp;quot;requestApprovedDecision&amp;quot;&amp;gt;&amp;lt;/sequenceFlow&amp;gt;
+    &amp;lt;exclusiveGateway id=&amp;quot;requestApprovedDecision&amp;quot; name=&amp;quot;Request approved?&amp;quot;&amp;gt;&amp;lt;/exclusiveGateway&amp;gt;
+    &amp;lt;sequenceFlow id=&amp;quot;flow3&amp;quot; sourceRef=&amp;quot;requestApprovedDecision&amp;quot; targetRef=&amp;quot;sendApprovalMail&amp;quot;&amp;gt;
+      &amp;lt;conditionExpression xsi:type=&amp;quot;tFormalExpression&amp;quot;&amp;gt;&amp;lt;![CDATA[${vacationApproved == &amp;#39;true&amp;#39;}]]&amp;gt;&amp;lt;/conditionExpression&amp;gt;
+    &amp;lt;/sequenceFlow&amp;gt;
+    &amp;lt;userTask id=&amp;quot;sendApprovalMail&amp;quot; name=&amp;quot;Send confirmation e-mail&amp;quot;&amp;gt;&amp;lt;/userTask&amp;gt;
+    &amp;lt;sequenceFlow id=&amp;quot;flow4&amp;quot; sourceRef=&amp;quot;sendApprovalMail&amp;quot; targetRef=&amp;quot;theEnd1&amp;quot;&amp;gt;&amp;lt;/sequenceFlow&amp;gt;
+    &amp;lt;endEvent id=&amp;quot;theEnd1&amp;quot;&amp;gt;&amp;lt;/endEvent&amp;gt;
+    &amp;lt;sequenceFlow id=&amp;quot;flow5&amp;quot; sourceRef=&amp;quot;requestApprovedDecision&amp;quot; targetRef=&amp;quot;adjustVacationRequestTask&amp;quot;&amp;gt;
+      &amp;lt;conditionExpression xsi:type=&amp;quot;tFormalExpression&amp;quot;&amp;gt;&amp;lt;![CDATA[${vacationApproved == &amp;#39;false&amp;#39;}]]&amp;gt;&amp;lt;/conditionExpression&amp;gt;
+    &amp;lt;/sequenceFlow&amp;gt;
+    &amp;lt;userTask id=&amp;quot;adjustVacationRequestTask&amp;quot; name=&amp;quot;Adjust vacation request&amp;quot; activiti:assignee=&amp;quot;${employeeName}&amp;quot;&amp;gt;
+      &amp;lt;documentation&amp;gt;Your manager has disapproved your vacation request for ${numberOfDays} days.
+        Reason: ${managerMotivation}&amp;lt;/documentation&amp;gt;
+      &amp;lt;extensionElements&amp;gt;
+        &amp;lt;activiti:formProperty id=&amp;quot;numberOfDays&amp;quot; name=&amp;quot;Number of days&amp;quot; type=&amp;quot;long&amp;quot; required=&amp;quot;true&amp;quot;&amp;gt;&amp;lt;/activiti:formProperty&amp;gt;
+        &amp;lt;activiti:formProperty id=&amp;quot;startDate&amp;quot; name=&amp;quot;First day of holiday (dd-MM-yyy)&amp;quot; type=&amp;quot;date&amp;quot; datePattern=&amp;quot;dd-MM-yyyy hh:mm&amp;quot; required=&amp;quot;true&amp;quot;&amp;gt;&amp;lt;/activiti:formProperty&amp;gt;
+        &amp;lt;activiti:formProperty id=&amp;quot;vacationMotivation&amp;quot; name=&amp;quot;Motivation&amp;quot; type=&amp;quot;string&amp;quot;&amp;gt;&amp;lt;/activiti:formProperty&amp;gt;
+        &amp;lt;activiti:formProperty id=&amp;quot;resendRequest&amp;quot; name=&amp;quot;Resend vacation request to manager?&amp;quot; type=&amp;quot;enum&amp;quot; required=&amp;quot;true&amp;quot;&amp;gt;
+          &amp;lt;activiti:value id=&amp;quot;true&amp;quot; name=&amp;quot;Yes&amp;quot;&amp;gt;&amp;lt;/activiti:value&amp;gt;
+          &amp;lt;activiti:value id=&amp;quot;false&amp;quot; name=&amp;quot;No&amp;quot;&amp;gt;&amp;lt;/activiti:value&amp;gt;
+        &amp;lt;/activiti:formProperty&amp;gt;
+      &amp;lt;/extensionElements&amp;gt;
+    &amp;lt;/userTask&amp;gt;
+    &amp;lt;sequenceFlow id=&amp;quot;flow6&amp;quot; sourceRef=&amp;quot;adjustVacationRequestTask&amp;quot; targetRef=&amp;quot;resendRequestDecision&amp;quot;&amp;gt;&amp;lt;/sequenceFlow&amp;gt;
+    &amp;lt;exclusiveGateway id=&amp;quot;resendRequestDecision&amp;quot; name=&amp;quot;Resend Request Decision&amp;quot;&amp;gt;&amp;lt;/exclusiveGateway&amp;gt;
+    &amp;lt;sequenceFlow id=&amp;quot;flow8&amp;quot; sourceRef=&amp;quot;resendRequestDecision&amp;quot; targetRef=&amp;quot;handleRequest&amp;quot;&amp;gt;
+      &amp;lt;conditionExpression xsi:type=&amp;quot;tFormalExpression&amp;quot;&amp;gt;&amp;lt;![CDATA[${resendRequest == &amp;#39;true&amp;#39;}]]&amp;gt;&amp;lt;/conditionExpression&amp;gt;
+    &amp;lt;/sequenceFlow&amp;gt;
+    &amp;lt;endEvent id=&amp;quot;theEnd2&amp;quot;&amp;gt;&amp;lt;/endEvent&amp;gt;
+    &amp;lt;sequenceFlow id=&amp;quot;flow9&amp;quot; sourceRef=&amp;quot;resendRequestDecision&amp;quot; targetRef=&amp;quot;theEnd2&amp;quot;&amp;gt;
+        &amp;lt;conditionExpression xsi:type=&amp;quot;tFormalExpression&amp;quot;&amp;gt;&amp;lt;![CDATA[${resendRequest == &amp;#39;false&amp;#39;}]]&amp;gt;&amp;lt;/conditionExpression&amp;gt;
+    &amp;lt;/sequenceFlow&amp;gt;
+  &amp;lt;/process&amp;gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h3&gt;3.2， 流程部署&lt;/h3&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;RepositoryService repositoryService = processEngine.getRepositoryService();
+DeploymentBuilder deploymentBuilder = repositoryService.createDeployment();
+
+deploymentBuilder.addClasspathResource(&amp;quot;diagrams/VacationRequest.bpmn&amp;quot;)
+                         .addClasspathResource(&amp;quot;diagrams/VacationRequest.png&amp;quot;)
+                         .name(&amp;quot;请假测试&amp;quot;)
+                         .category(&amp;quot;请假&amp;quot;);
+deploymentBuilder.deploy();&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h2&gt;四、流程代码演示&lt;/h2&gt;
+
+&lt;h3&gt;4.1， 由部署文件生成流程实例&lt;/h3&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;identityService.setAuthenticatedUserId(&amp;quot;fozzie&amp;quot;); // 配合 activiti:initiator 使用
+ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery()
+                    .processDefinitionKey(&amp;quot;vacationRequest&amp;quot;)
+                    .orderByProcessDefinitionId()
+                    .desc().list().get(0);
+Map&amp;lt;String, Object&amp;gt; variables = new HashMap&amp;lt;String, Object&amp;gt;();
+variables.put(&amp;quot;numberOfDays&amp;quot;, &amp;quot;3&amp;quot;);
+variables.put(&amp;quot;vacationMotivation&amp;quot;, &amp;quot;请假原因。&amp;quot;);
+variables.put(&amp;quot;startDate&amp;quot;, new Date());
+runtimeService.startProcessInstanceById(processDefinition.getId(),variables);&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h3&gt;4.2， 经理驳回&lt;/h3&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;// 经理获得 任务
+User manager = identityService.createUserQuery()
+                            .memberOfGroup(&amp;quot;management&amp;quot;)
+                            .orderByUserId().desc().list().get(0);
+Task task = taskService.createTaskQuery()
+                            .taskCandidateGroup(&amp;quot;management&amp;quot;)
+                            .orderByTaskId().desc().list().get(0);
+taskService.claim(task.getId(), manager.getId());
+
+// 经理执行 reject   &amp;quot;vacationApproved&amp;quot;
+Map&amp;lt;String, Object&amp;gt; variables = new HashMap&amp;lt;String, Object&amp;gt;();
+variables.put(&amp;quot;vacationApproved&amp;quot;, &amp;quot;false&amp;quot;);
+taskService.complete(task.getId(), variables);
+
+// 员工修改内容
+Task reSentTask = taskService.createTaskQuery()
+                        .taskInvolvedUser(&amp;quot;fozzie&amp;quot;)
+                        .orderByTaskId().desc().list().get(0);
+Map&amp;lt;String, Object&amp;gt; adjustVar = new HashMap&amp;lt;String, Object&amp;gt;();
+adjustVar.put(&amp;quot;numberOfDays&amp;quot;, 3);
+adjustVar.put(&amp;quot;vacationMotivation&amp;quot;, &amp;quot;2&amp;quot;);
+adjustVar.put(&amp;quot;resendRequest&amp;quot;, &amp;quot;true&amp;quot;);
+taskService.complete(reSentTask.getId(), adjustVar);&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h3&gt;4.3，  经理同意&lt;/h3&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;// 经理获得 任务
+User manager = identityService.createUserQuery()
+                            .memberOfGroup(&amp;quot;management&amp;quot;)
+                            .orderByUserId().desc().list().get(0);
+Task task = taskService.createTaskQuery()
+                            .taskCandidateGroup(&amp;quot;management&amp;quot;)
+                            .orderByTaskId().desc().list().get(0);
+taskService.claim(task.getId(), manager.getId());
+
+// 经理执行 approve   &amp;quot;vacationApproved&amp;quot;
+Map&amp;lt;String, Object&amp;gt; variables = new HashMap&amp;lt;String, Object&amp;gt;();
+variables.put(&amp;quot;vacationApproved&amp;quot;, &amp;quot;true&amp;quot;);
+taskService.complete(task.getId(), variables);
+
+// 员工发送邮件
+Task mailTask = taskService.createTaskQuery()
+                            .taskInvolvedUser(&amp;quot;fozzie&amp;quot;)
+                            .orderByTaskId().desc().list().get(0);
+taskService.complete(mailTask.getId());&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+</description>
+        <pubDate>Sat, 22 Oct 2016 13:32:24 +0800</pubDate>
+        <link>http://localhost:4000/2016/10/Activiti-API/</link>
+        <guid isPermaLink="true">http://localhost:4000/2016/10/Activiti-API/</guid>
+        
+        
+      </item>
     
       <item>
         <title>工作流数据库表</title>
@@ -2693,9 +2965,9 @@
 &lt;li&gt;Activiti Rest ： 提供 Restful 风格的服务，允许客户端以 JSON 的方式与引擎的 Rest API 交互，可以跨平台，跨语言开发。&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h2&gt;&lt;a name=&quot;Environment-Part&quot;&gt;&lt;/a&gt;第二部分：环境搭建&lt;/h2&gt;
+&lt;h2&gt;&lt;a name=&quot;Environment-Part&quot;&gt;&lt;/a&gt;第二部分：Activiti介绍&lt;/h2&gt;
 
-&lt;p&gt;2.1, Activiti 下载 ： &lt;a href=&quot;http://activiti.org&quot;&gt;activiti&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;2.1, Activiti 下载 ： [activiti][activiti-download]&lt;/p&gt;
 
 &lt;p&gt;2.2, Activiti 目录结构：&lt;/p&gt;
 
@@ -2789,53 +3061,31 @@
 
 &lt;p&gt;5&amp;gt; org.activiti.engine.event：&lt;/p&gt;
 
-&lt;p&gt;6&amp;gt; org.activiti.engine.form：&lt;/p&gt;
+&lt;p&gt;6&amp;gt; org.activiti.engine.form： -&amp;gt; FormService&lt;/p&gt;
 
-&lt;p&gt;7&amp;gt; org.activiti.engine.history：&lt;/p&gt;
+&lt;p&gt;7&amp;gt; org.activiti.engine.history： -&amp;gt; HistoryService&lt;/p&gt;
 
-&lt;p&gt;8&amp;gt; org.activiti.engine.identity：&lt;/p&gt;
+&lt;p&gt;8&amp;gt; org.activiti.engine.identity： -&amp;gt; IdentifyService&lt;/p&gt;
 
 &lt;p&gt;9&amp;gt; org.activiti.engine.logging：&lt;/p&gt;
 
-&lt;p&gt;10&amp;gt; org.activiti.engine.management：&lt;/p&gt;
+&lt;p&gt;10&amp;gt; org.activiti.engine.management： -&amp;gt; ManagementService&lt;/p&gt;
 
 &lt;p&gt;11&amp;gt; org.activiti.engine.parse：&lt;/p&gt;
 
 &lt;p&gt;12&amp;gt; org.activiti.engine.query：&lt;/p&gt;
 
-&lt;p&gt;13&amp;gt; org.activiti.engine.repository：&lt;/p&gt;
+&lt;p&gt;13&amp;gt; org.activiti.engine.repository： -&amp;gt; RepositoryService&lt;/p&gt;
 
-&lt;p&gt;14&amp;gt; org.activiti.engine.runtime：&lt;/p&gt;
+&lt;p&gt;14&amp;gt; org.activiti.engine.runtime： -&amp;gt; RuntimeService&lt;/p&gt;
 
-&lt;p&gt;15&amp;gt; org.activiti.engine.task：&lt;/p&gt;
+&lt;p&gt;15&amp;gt; org.activiti.engine.task： -&amp;gt; TaskService&lt;/p&gt;
 
 &lt;p&gt;16&amp;gt; org.activiti.engine.test：&lt;/p&gt;
 
 &lt;p&gt;17&amp;gt; org.activiti.engine.test.mock：&lt;/p&gt;
-
-&lt;h2&gt;&lt;a name=&quot;Process-Design-Part&quot;&gt;&lt;/a&gt;第三部分：流程设计&lt;/h2&gt;
-
-&lt;h2&gt;&lt;a name=&quot;Process-Deploy-Part&quot;&gt;&lt;/a&gt;第四部分：流程部署&lt;/h2&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;#Getting-Start&quot;&gt;&lt;strong&gt;初识&lt;/strong&gt;&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#Activiti-Part&quot;&gt;&lt;strong&gt;Activiti&lt;/strong&gt;&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#Environment-Part&quot;&gt;&lt;strong&gt;环境搭建&lt;/strong&gt;&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#Process-Design-Part&quot;&gt;&lt;strong&gt;流程设计&lt;/strong&gt;&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#Process-Deploy-Part&quot;&gt;&lt;strong&gt;流程部署&lt;/strong&gt;&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;You’ll find this post in your &lt;code&gt;_posts&lt;/code&gt; directory.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;def print_hi(name)
-  puts &amp;quot;Hi, #{name}&amp;quot;
-end
-print_hi(&amp;#39;Tom&amp;#39;)
-#=&amp;gt; prints &amp;#39;Hi, Tom&amp;#39; to STDOUT.&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Check out the [Jekyll docs][jekyll-docs] for more info on how to get the most out of Jekyll.&lt;/p&gt;
 </description>
-        <pubDate>Fri, 07 Oct 2016 13:32:24 +0800</pubDate>
+        <pubDate>Fri, 14 Oct 2016 13:32:24 +0800</pubDate>
         <link>http://localhost:4000/2016/10/WorkFlow-Getting-Started/</link>
         <guid isPermaLink="true">http://localhost:4000/2016/10/WorkFlow-Getting-Started/</guid>
         

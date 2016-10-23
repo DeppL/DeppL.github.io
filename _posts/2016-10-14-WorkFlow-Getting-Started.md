@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 工作流入门
-date: 2016-10-07 13:32:24.000000000 +08:00
+date: 2016-10-14 13:32:24.000000000 +08:00
 ---
 
 
@@ -32,7 +32,7 @@ date: 2016-10-07 13:32:24.000000000 +08:00
 
 
 
-## <a name="Environment-Part"></a>第二部分：环境搭建
+## <a name="Environment-Part"></a>第二部分：Activiti介绍
 2.1, Activiti 下载 ： [activiti][activiti-download]
 
 2.2, Activiti 目录结构：
@@ -73,60 +73,28 @@ date: 2016-10-07 13:32:24.000000000 +08:00
 
 5> org.activiti.engine.event：
 
-6> org.activiti.engine.form：
+6> org.activiti.engine.form： -> FormService
 
-7> org.activiti.engine.history：
+7> org.activiti.engine.history： -> HistoryService
 
-8> org.activiti.engine.identity：
+8> org.activiti.engine.identity： -> IdentifyService
 
 9> org.activiti.engine.logging：
 
-10> org.activiti.engine.management：
+10> org.activiti.engine.management： -> ManagementService
 
 11> org.activiti.engine.parse：
 
 12> org.activiti.engine.query：
 
-13> org.activiti.engine.repository：
+13> org.activiti.engine.repository： -> RepositoryService
 
-14> org.activiti.engine.runtime：
+14> org.activiti.engine.runtime： -> RuntimeService
 
-15> org.activiti.engine.task：
+15> org.activiti.engine.task： -> TaskService
 
 16> org.activiti.engine.test：
 
 17> org.activiti.engine.test.mock：
 
 
-## <a name="Process-Design-Part"></a>第三部分：流程设计
-
-
-## <a name="Process-Deploy-Part"></a>第四部分：流程部署
-
-
-
-
-
-
-* [**初识**](#Getting-Start)
-* [**Activiti**](#Activiti-Part)
-* [**环境搭建**](#Environment-Part)
-* [**流程设计**](#Process-Design-Part)
-* [**流程部署**](#Process-Deploy-Part)
-
-
-
-You’ll find this post in your `_posts` directory.
-
-{% highlight ruby %}
-def print_hi(name)
-  puts "Hi, #{name}"
-end
-print_hi('Tom')
-#=> prints 'Hi, Tom' to STDOUT.
-{% endhighlight %}
-
-Check out the [Jekyll docs][jekyll-docs] for more info on how to get the most out of Jekyll.
-
-
-[activiti-download]: http://activiti.org
