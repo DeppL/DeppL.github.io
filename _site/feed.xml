@@ -5,8 +5,8 @@
     <description>这里是 余亮 的 Blog</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 23 Oct 2016 15:41:24 +0800</pubDate>
-    <lastBuildDate>Sun, 23 Oct 2016 15:41:24 +0800</lastBuildDate>
+    <pubDate>Mon, 24 Oct 2016 15:16:07 +0800</pubDate>
+    <lastBuildDate>Mon, 24 Oct 2016 15:16:07 +0800</lastBuildDate>
     <generator>Jekyll v3.3.0</generator>
     
       <item>
@@ -77,8 +77,8 @@
 │
 ├── 流程代码演示
 │     ├─ 由部署文件生成流程实例
-│     ├─ 经理驳回
-│     ├─ 经理同意
+│     ├─ 驳回申请
+│     ├─ 同意申请
 │ 
 │&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
@@ -226,7 +226,7 @@ variables.put(&amp;quot;vacationMotivation&amp;quot;, &amp;quot;请假原因。&
 variables.put(&amp;quot;startDate&amp;quot;, new Date());
 runtimeService.startProcessInstanceById(processDefinition.getId(),variables);&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;h3&gt;4.2， 经理驳回&lt;/h3&gt;
+&lt;h3&gt;4.2， 驳回申请&lt;/h3&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;// 经理获得 任务
 User manager = identityService.createUserQuery()
@@ -252,7 +252,7 @@ adjustVar.put(&amp;quot;vacationMotivation&amp;quot;, &amp;quot;2&amp;quot;);
 adjustVar.put(&amp;quot;resendRequest&amp;quot;, &amp;quot;true&amp;quot;);
 taskService.complete(reSentTask.getId(), adjustVar);&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;h3&gt;4.3，  经理同意&lt;/h3&gt;
+&lt;h3&gt;4.3，  同意申请&lt;/h3&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;// 经理获得 任务
 User manager = identityService.createUserQuery()

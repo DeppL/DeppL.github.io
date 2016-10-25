@@ -43,8 +43,8 @@ date: 2016-10-22 13:32:24.000000000 +08:00
 │
 ├── 流程代码演示
 │     ├─ 由部署文件生成流程实例
-│     ├─ 经理驳回
-│     ├─ 经理同意
+│     ├─ 驳回申请
+│     ├─ 同意申请
 │ 
 │
 
@@ -210,7 +210,7 @@ runtimeService.startProcessInstanceById(processDefinition.getId(),variables);
 {% endhighlight %}
 
 
-###4.2， 经理驳回
+###4.2， 驳回申请
 {% highlight java %}
 // 经理获得 任务
 User manager = identityService.createUserQuery()
@@ -239,7 +239,7 @@ taskService.complete(reSentTask.getId(), adjustVar);
 
 {% endhighlight %}
 
-###4.3，  经理同意
+###4.3，  同意申请
 {% highlight java %}
 
 // 经理获得 任务
